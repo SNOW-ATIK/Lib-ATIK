@@ -1,0 +1,11 @@
+C:\Source\ATIKLibrary\Communication\obj\Debug\Communication.csprojAssemblyReference.cache
+C:\Source\ATIKLibrary\Communication\obj\Debug\Communication.csproj.CoreCompileInputs.cache
+C:\Source\ATIKLibrary\Communication\bin\Debug\ATIKLibrary.Communication.dll.config
+C:\Source\ATIKLibrary\Communication\bin\Debug\ATIKLibrary.Communication.dll
+C:\Source\ATIKLibrary\Communication\bin\Debug\ATIKLibrary.Communication.pdb
+C:\Source\ATIKLibrary\Communication\obj\Debug\Communication.csproj.CopyComplete
+C:\Source\ATIKLibrary\Communication\obj\Debug\ATIKLibrary.Communication.dll
+C:\Source\ATIKLibrary\Communication\obj\Debug\ATIKLibrary.Communication.pdb
+C:\Source\ATIKLibrary\Communication\bin\Debug\ATIKLibrary.Common.dll
+C:\Source\ATIKLibrary\Communication\bin\Debug\ATIKLibrary.Common.pdb
+C:\Source\ATIKLibrary\Communication\bin\Debug\ATIKLibrary.Common.dll.config

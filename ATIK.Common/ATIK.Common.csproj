@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E85E5E75-E8C6-4621-9D1D-EE34D24E285F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ATIK.Common</RootNamespace>
+    <AssemblyName>ATIK.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ComponentEtc\Button\Btn_ParentFormClose.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Button\Btn_ParentFormClose.Designer.cs">
+      <DependentUpon>Btn_ParentFormClose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Button\Btn_ParentFormMinimize.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Button\Btn_ParentFormMinimize.Designer.cs">
+      <DependentUpon>Btn_ParentFormMinimize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Collections.cs" />
+    <Compile Include="ComponentEtc\Fluidics\Reagent\Cmp_Reagent_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Reagent\Cmp_Reagent_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Reagent_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Syringe\Cmp_Syringe_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Syringe\Cmp_Syringe_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Syringe_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Syringe\Cmp_Syringe_Head_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Syringe\Cmp_Syringe_Head_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Syringe_Head_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_6Way_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_6Way_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Valve_6Way_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_2Way_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_2Way_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Valve_2Way_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_3Way_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_3Way_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Valve_3Way_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Vessel\Cmp_Vessel_Bmp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Vessel\Cmp_Vessel_Bmp.Designer.cs">
+      <DependentUpon>Cmp_Vessel_Bmp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\KeyPad\KeyPadButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\KeyPad\KeyPadButton.Designer.cs">
+      <DependentUpon>KeyPadButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Chart\ChartControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Chart\ChartControl.Designer.cs">
+      <DependentUpon>ChartControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\KeyPad\Frm_StrKeyPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\KeyPad\Frm_StrKeyPad.Designer.cs">
+      <DependentUpon>Frm_StrKeyPad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Label\Lbl_MoveTitle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Label\Lbl_MoveTitle.Designer.cs">
+      <DependentUpon>Lbl_MoveTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\MessageBox\MsgFrm_PasswordIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\MessageBox\MsgFrm_PasswordIn.designer.cs">
+      <DependentUpon>MsgFrm_PasswordIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\MessageBox\MsgFrm_NofityOnly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\MessageBox\MsgFrm_NofityOnly.designer.cs">
+      <DependentUpon>MsgFrm_NofityOnly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\MessageBox\MsgFrm_AskYesNo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\MessageBox\MsgFrm_AskYesNo.designer.cs">
+      <DependentUpon>MsgFrm_AskYesNo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentEtc\Util\UsrCtrl_TimeNow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Util\UsrCtrl_TimeNow.designer.cs">
+      <DependentUpon>UsrCtrl_TimeNow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Define.cs" />
+    <Compile Include="Handle_UI.cs" />
+    <Compile Include="IniCfg\IniCfg.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Math\DataHandling.cs" />
+    <Compile Include="Math\Geometry.cs" />
+    <Compile Include="Math\Interpolation.cs" />
+    <Compile Include="Parameter\GenericPrm.cs" />
+    <Compile Include="ComponentEtc\KeyPad\Frm_NumPad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\KeyPad\Frm_NumPad.Designer.cs">
+      <DependentUpon>Frm_NumPad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Parameter\IPrmCmp.cs" />
+    <Compile Include="Parameter\PrmCmp.cs" />
+    <Compile Include="Parameter\PrmCmp_Collection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Parameter\PrmCmp_Collection.Designer.cs">
+      <DependentUpon>PrmCmp_Collection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Parameter\PrmCmp_Value.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Parameter\PrmCmp_Value.designer.cs">
+      <DependentUpon>PrmCmp_Value.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Util\Util.cs" />
+    <Compile Include="Util\Util_HandleType.cs" />
+    <Compile Include="XmlCfg\XmlCfg.cs" />
+    <Compile Include="XmlCfgTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\..\L-Titrator-Alpha\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ComponentEtc\Button\Btn_ParentFormClose.resx">
+      <DependentUpon>Btn_ParentFormClose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Button\Btn_ParentFormMinimize.resx">
+      <DependentUpon>Btn_ParentFormMinimize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Reagent\Cmp_Reagent_Bmp.resx">
+      <DependentUpon>Cmp_Reagent_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Syringe\Cmp_Syringe_Bmp.resx">
+      <DependentUpon>Cmp_Syringe_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Syringe\Cmp_Syringe_Head_Bmp.resx">
+      <DependentUpon>Cmp_Syringe_Head_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_6Way_Bmp.resx">
+      <DependentUpon>Cmp_Valve_6Way_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_2Way_Bmp.resx">
+      <DependentUpon>Cmp_Valve_2Way_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_3Way_Bmp.resx">
+      <DependentUpon>Cmp_Valve_3Way_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Fluidics\Vessel\Cmp_Vessel_Bmp.resx">
+      <DependentUpon>Cmp_Vessel_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\KeyPad\KeyPadButton.resx">
+      <DependentUpon>KeyPadButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Chart\ChartControl.resx">
+      <DependentUpon>ChartControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\KeyPad\Frm_StrKeyPad.resx">
+      <DependentUpon>Frm_StrKeyPad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Label\Lbl_MoveTitle.resx">
+      <DependentUpon>Lbl_MoveTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\MessageBox\MsgFrm_PasswordIn.resx">
+      <DependentUpon>MsgFrm_PasswordIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\MessageBox\MsgFrm_NofityOnly.resx">
+      <DependentUpon>MsgFrm_NofityOnly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\MessageBox\MsgFrm_AskYesNo.resx">
+      <DependentUpon>MsgFrm_AskYesNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\KeyPad\Frm_NumPad.resx">
+      <DependentUpon>Frm_NumPad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Util\UsrCtrl_TimeNow.resx">
+      <DependentUpon>UsrCtrl_TimeNow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Parameter\PrmCmp_Collection.resx">
+      <DependentUpon>PrmCmp_Collection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Parameter\PrmCmp_Value.resx">
+      <DependentUpon>PrmCmp_Value.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_0.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_0.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_30.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_40.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_50.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_60.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_70.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_80.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_90.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Orange_L_100.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_0.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_30.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_40.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_50.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_60.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_70.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_80.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_90.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reagent_Yellow_R_100.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve2Way_TB_Common_N_Close_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve2Way_TB_Common_N_Open_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_T_Close_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_T_Open_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_T_Open_B.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_T_Open_L.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_RBL_Common_L_Close_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_RBL_Common_L_Open_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_RBL_Common_L_Open_B.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_RBL_Common_L_Open_R.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_T_Close_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_T_Open_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_T_Open_B.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_T_Open_R.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve6Way_Link_12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve6Way_Link_23.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve6Way_Link_None.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_30.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_40.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_50.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_60.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_70.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_80.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_90.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Orange_100.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_0.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_10.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_30.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_40.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_50.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_60.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_70.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_80.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_90.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Yellow_100.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Head_LR_Open_R.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Head_LTR_Open_L.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Head_LTR_Open_R.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Head_LTR_Open_T.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Syringe_Head_LR_Open_L.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vessel_Green_0.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vessel_Green_20.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vessel_Green_40.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vessel_Green_60.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vessel_Green_80.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Vessel_Green_100.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

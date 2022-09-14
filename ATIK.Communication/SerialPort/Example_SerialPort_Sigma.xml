@@ -1,0 +1,17 @@
+<XmlCfg_SerialPort>
+	<NoOfSerialPorts>1</NoOfSerialPorts>
+	<SerialPort_0>
+		<Section>SupplyEq</Section>
+		<Name>Sigma</Name>
+		<Setting>
+			<PortName>COM4</PortName>
+			<BaudRate>9600</BaudRate>
+			<Parity>None</Parity>
+			<DataBits>8</DataBits>
+			<StopBits>1</StopBits>
+			<WriteTimeOut>2000</WriteTimeOut>
+			<ReadTimeOut>2000</ReadTimeOut>
+			<Terminator>[CR][LF]</Terminator>
+		</Setting>
+	</SerialPort_0>
+</XmlCfg_SerialPort>

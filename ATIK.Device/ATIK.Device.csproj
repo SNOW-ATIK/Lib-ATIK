@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{44B5C1C4-FD76-4C11-A4E4-591FC0D37A20}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ATIK.Device</RootNamespace>
+    <AssemblyName>ATIK.Device</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATIK_MainBoard\ATIK_MainBoard.cs" />
+    <Compile Include="ATIK_MainBoard\ATIK_MainBoard_ComHandler.cs" />
+    <Compile Include="ATIK_MainBoard\ATIK_MainBoard_Elems.cs" />
+    <Compile Include="ATIK_MainBoard\Device\Syringe\MB_Cmp_Syringe.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ATIK_MainBoard\Device\Syringe\MB_Cmp_Syringe.Designer.cs">
+      <DependentUpon>MB_Cmp_Syringe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ATIK_MainBoard\IATIK_MainBoard.cs" />
+    <Compile Include="ATIK_MainBoard\L-Titrator\Driver_L_Titrator_DataHanlder.cs" />
+    <Compile Include="ATIK_MainBoard\L-Titrator\Driver_L_Titrator_Map.cs" />
+    <Compile Include="ATIK_MainBoard\L-Titrator\Driver_L_Titrator_PreDef.cs" />
+    <Compile Include="ATIK_MainBoard\L-Titrator\Driver_L_Titrator.cs" />
+    <Compile Include="Fieldbus Driver\Crevis\Process_CrevisModbusTCP.cs" />
+    <Compile Include="Fieldbus Driver\Crevis\CrevisFnIO.cs" />
+    <Compile Include="Fieldbus Driver\Crevis\Fieldbus_CrevisModbusTCP.cs" />
+    <Compile Include="Fieldbus Driver\Fieldbus_Common.cs" />
+    <Compile Include="IO\Cmp_DIO.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IO\Cmp_DIO.Designer.cs">
+      <DependentUpon>Cmp_DIO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IO\Element_IO.cs" />
+    <Compile Include="IO\PreDefine_IO.cs" />
+    <Compile Include="IO\XmlCfg_IO.cs" />
+    <Compile Include="PreDefine_Device.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CrevisFnIO20.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="IO\OLD_Example_IO_CrevisModbusTCP.xml" />
+    <Content Include="IO\Example_IO_CrevisModbusTCP.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ATIK.Common\ATIK.Common.csproj">
+      <Project>{e85e5e75-e8c6-4621-9d1d-ee34d24e285f}</Project>
+      <Name>ATIK.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ATIK.Communication\ATIK.Communication.csproj">
+      <Project>{1df21e0a-4ccd-4ad9-ac2a-55c636a839ac}</Project>
+      <Name>ATIK.Communication</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="IO\Cmp_DIO.resx">
+      <DependentUpon>Cmp_DIO.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

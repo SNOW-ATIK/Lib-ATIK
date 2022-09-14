@@ -1,0 +1,12 @@
+C:\Source\ATIKLibrary\Device\obj\Debug\Device.csprojAssemblyReference.cache
+C:\Source\ATIKLibrary\Device\obj\Debug\Device.csproj.CoreCompileInputs.cache
+C:\Source\ATIKLibrary\Device\bin\Debug\ATIKLibrary.Device.dll.config
+C:\Source\ATIKLibrary\Device\bin\Debug\ATIKLibrary.Device.dll
+C:\Source\ATIKLibrary\Device\bin\Debug\ATIKLibrary.Device.pdb
+C:\Source\ATIKLibrary\Device\obj\Debug\ATIKLibrary.Device.dll
+C:\Source\ATIKLibrary\Device\obj\Debug\ATIKLibrary.Device.pdb
+C:\Source\ATIKLibrary\Device\bin\Debug\Fieldbus Driver\Crevis\ExLib\CrevisFnIO20.dll
+C:\Source\ATIKLibrary\Device\bin\Debug\ATIKLibrary.Common.dll
+C:\Source\ATIKLibrary\Device\bin\Debug\ATIKLibrary.Common.pdb
+C:\Source\ATIKLibrary\Device\bin\Debug\ATIKLibrary.Common.dll.config
+C:\Source\ATIKLibrary\Device\obj\Debug\Device.csproj.CopyComplete
