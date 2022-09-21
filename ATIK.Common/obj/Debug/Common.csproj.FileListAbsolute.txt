@@ -1,6 +1,0 @@
-C:\Source\ATIKLibrary\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
-C:\Source\ATIKLibrary\Common\bin\Debug\ATIKLibrary.Common.dll.config
-C:\Source\ATIKLibrary\Common\bin\Debug\ATIKLibrary.Common.dll
-C:\Source\ATIKLibrary\Common\bin\Debug\ATIKLibrary.Common.pdb
-C:\Source\ATIKLibrary\Common\obj\Debug\ATIKLibrary.Common.dll
-C:\Source\ATIKLibrary\Common\obj\Debug\ATIKLibrary.Common.pdb
