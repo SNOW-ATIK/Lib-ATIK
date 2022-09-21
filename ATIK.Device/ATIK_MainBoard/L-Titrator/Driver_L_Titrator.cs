@@ -103,8 +103,6 @@ namespace ATIK.Device.ATIK_MainBoard
                 return false;
             }
 
-            bool bSetSuccess = true;
-
             string sChNo = (LineOrder)lineOrder == LineOrder.Syringe_1 ? "0" : "1";
             string sFlow = flow == MB_SyringeFlow.Pick ? "0" : "1";
             string sDir = string.Empty;
@@ -127,13 +125,14 @@ namespace ATIK.Device.ATIK_MainBoard
 
             string txLine = $"{sChNo}{sFlow}{sDir}{sSpeed}{sVolume}";
             bool setDone = DataHandler.Set_Line((LineOrder)lineOrder, txLine, true);
+            bool resetDone = false;
             if (setDone == true)
             {
                 txLine = "0000000000";
-                bool resetDone = DataHandler.Set_Line((LineOrder)lineOrder, txLine, true);
-
-                bSetSuccess = setDone & resetDone;
+                resetDone = DataHandler.Set_Line((LineOrder)lineOrder, txLine, true);
             }
+
+            bool bSetSuccess = setDone & resetDone;
 
             return bSetSuccess;
         }
@@ -141,7 +140,7 @@ namespace ATIK.Device.ATIK_MainBoard
         public (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(int lineOrder)
         {
             LineOrder line = (LineOrder)lineOrder;
-            if (line != LineOrder.Syringe_1 || line != LineOrder.Syringe_2)
+            if (line != LineOrder.Syringe_1 && line != LineOrder.Syringe_2)
             {
                 return (false, 0);
             }
@@ -172,7 +171,7 @@ namespace ATIK.Device.ATIK_MainBoard
         public (bool IsValid, MB_SyringeDirection PortDirection) Get_SyringePortDirection(int lineOrder)
         {
             LineOrder line = (LineOrder)lineOrder;
-            if (line != LineOrder.Syringe_1 || line != LineOrder.Syringe_2)
+            if (line != LineOrder.Syringe_1 && line != LineOrder.Syringe_2)
             {
                 return (false, 0);
             }

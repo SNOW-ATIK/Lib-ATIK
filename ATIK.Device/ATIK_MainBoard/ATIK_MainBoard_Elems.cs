@@ -140,8 +140,9 @@ namespace ATIK.Device.ATIK_MainBoard
         public bool ExtDirection_Enabled { get; private set; }
         public int MaxVolume_Raw { get; private set; }
         public int MaxSpeed { get; private set; }
-        public double ScaleFactor { get; private set; }
         public double MaxVolume_mL { get => MaxVolume_Raw / ScaleFactor; }
+        public double ScaleFactor { get; private set; }
+        public double PositionEndBandwidth { get; private set; }
 
         private System.Threading.Thread RunSyringe;
 
@@ -161,7 +162,7 @@ namespace ATIK.Device.ATIK_MainBoard
             }
         }
 
-        public MB_Elem_Syringe(DefinedMainBoards boardID, string logicalName, int lineNo, bool extEnabled, int maxVolume, int maxSpeed, double scaleFactor)
+        public MB_Elem_Syringe(DefinedMainBoards boardID, string logicalName, int lineNo, bool extEnabled, int maxVolume, int maxSpeed, double scaleFactor, double posEndBandwidth)
         {
             _BoardID = boardID;
             LogicalName = logicalName;
@@ -171,6 +172,7 @@ namespace ATIK.Device.ATIK_MainBoard
             MaxVolume_Raw = maxVolume;
             MaxSpeed = maxSpeed;
             ScaleFactor = scaleFactor;
+            PositionEndBandwidth = posEndBandwidth;
 
             if (ElemsAll.ContainsKey(LogicalName) == false)
             {

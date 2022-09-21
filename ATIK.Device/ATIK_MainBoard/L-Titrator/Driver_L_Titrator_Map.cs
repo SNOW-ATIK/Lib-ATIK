@@ -167,7 +167,8 @@ namespace ATIK.Device.ATIK_MainBoard
                     int maxSpeed = int.Parse(cfg.Get_Item(lineName, "MaxSpeed"));
                     int maxVolume = int.Parse(cfg.Get_Item(lineName, "MaxVolume"));
                     double scaleFactor = double.Parse(cfg.Get_Item(lineName, "ScaleFactor"));
-                    MB_Elem_Syringe elem = new MB_Elem_Syringe(DefinedMainBoards.L_Titrator, logicalName, (int)lineOrder, extEnabled, maxVolume, maxSpeed, scaleFactor);
+                    double pendBandwidth = double.Parse(cfg.Get_Item(lineName, "PositionEndBandwidth"));
+                    MB_Elem_Syringe elem = new MB_Elem_Syringe(DefinedMainBoards.L_Titrator, logicalName, (int)lineOrder, extEnabled, maxVolume, maxSpeed, scaleFactor, pendBandwidth);
                     SyringeCtrlMap.Add(lineOrder, elem);
                 }
                 IsLoaded = SyringeCtrlMap.Count > 0;

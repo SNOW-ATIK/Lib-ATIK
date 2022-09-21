@@ -78,10 +78,11 @@ namespace ATIK.Device.ATIK_MainBoard
 
     public enum MB_SyringeDirection
     {
+        Reserved,
         In,
         Out,
         Ext,
-        None
+        None,
     }
 
     // class
