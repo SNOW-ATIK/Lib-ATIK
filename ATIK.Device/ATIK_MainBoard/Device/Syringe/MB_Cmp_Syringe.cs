@@ -311,6 +311,8 @@ namespace ATIK.Device.ATIK_MainBoard
 
                     Enable_Setting();
 
+                    NotifyCondition();
+
                     return;
                 }
 
@@ -353,6 +355,8 @@ namespace ATIK.Device.ATIK_MainBoard
                     msgFrm.ShowDialog();
 
                     Enable_Setting();
+
+                    NotifyCondition();
 
                     return;
                 }
@@ -399,6 +403,9 @@ namespace ATIK.Device.ATIK_MainBoard
             else if (bFlow == false && bDir == false && bSpeed == false && bVol == false)
             {
                 SyringeConditionChangedEvent(MySyringe, MB_SyringeFlow.None, MB_SyringeDirection.None, 0, 0);
+            }
+            else
+            { 
             }
         }
 
