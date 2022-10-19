@@ -22,6 +22,8 @@ namespace ATIK.Device.ATIK_MainBoard
     public interface IMB_Driver
     {
         bool IsInitialized { get; }
+
+        bool ComStatus { get; }
         
         MB_Protocol Get_Protocol();
 

@@ -156,7 +156,7 @@ namespace ATIK
 
                         if (string.IsNullOrEmpty(tmpText) == true || double.TryParse(tmpText, out double outValue) == false)
                         {
-                            ValueEditor.Text = "Prm_Value";
+                            ValueEditor.Text = "0";
                         }
                         else
                         {
@@ -241,7 +241,7 @@ namespace ATIK
 
                     if (string.IsNullOrEmpty(tmpText) == true || double.TryParse(tmpText, out double outValue) == false)
                     {
-                        ValueEditor.Text = "Prm_Value";
+                        ValueEditor.Text = "0";
                     }
                     else
                     {

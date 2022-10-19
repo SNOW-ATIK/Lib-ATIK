@@ -32,6 +32,10 @@ namespace ATIK.Device.ATIK_MainBoard
         private ConcurrentQueue<string> qReceive = new ConcurrentQueue<string>();
         private Thread thrReceive;
 
+        // ComCheck
+        public delegate void ComErrorDelegate();
+        public event ComErrorDelegate ComErrorEvent;
+
         // Frame
         private object objLock_FrameReceiveStart = new object();
         private bool _FrameReceiveStart = false;
@@ -199,44 +203,72 @@ namespace ATIK.Device.ATIK_MainBoard
                     Thread.Sleep(100);
                     continue;
                 }
-
-                st.Reset();
-                st.Start();
-
-                mrstDataReceived.Reset();
-                for (int i = 0; i < TxPacket.Count; i++)
+                bool bSendAll = false;
+                int nRetry = 0;
+                while (bSendAll == false)
                 {
-                    bool sent = ComElem.Send(TxPacket[i]);
-                    if (sent == true)
+                    st.Reset();
+                    st.Start();
+
+                    int nSend = 0;
+                    mrstDataReceived.Reset();
+
+                    for (int i = 0; i < TxPacket.Count; i++)
                     {
-                        //ATIK.Log.WriteLog(ComElem.ComSetting.PortName, $"Tx> {TxPacket[i]}");
+                        bool sent = ComElem.Send(TxPacket[i]);
+                        if (sent == true)
+                        {
+                            //ATIK.Log.WriteLog(ComElem.ComSetting.PortName, $"Tx> {TxPacket[i]}");
+                            ++nSend;
+                        }
+                        else
+                        {
+                            // 강제로 ETX 송신
+                            bool sendETX = false;
+                            while (sendETX == false)
+                            {
+                                sendETX = ComElem.Send(ETX);
+                                Thread.Sleep(100);
+                            }
+                            break;
+                        }
+                    }
+
+                    bSendAll = nSend == TxPacket.Count;
+                    if (bSendAll == true)
+                    {
+                        if (mrstDataReceived.Wait((int)(TX_INTERVAL * 3)) == true)
+                        {
+                            // 정상 송신.
+
+                            st.Stop();
+                            int extra = (int)(TX_INTERVAL - st.ElapsedMilliseconds);
+                            if (extra >= 0)
+                            {
+                                Thread.Sleep(extra);
+                            }
+                        }
+                        else
+                        {
+                            // 정상 송신했으나, 응답 지연 혹은 응답 없음.
+                            Log.WriteLog("Debug", $"#. Data is not received in {TX_INTERVAL * 3}ms", true);
+
+                            ComErrorEvent?.Invoke();
+
+                            bSendAll = false;
+                            ++nRetry;
+                        }
                     }
                     else
                     {
-                        bool sendETX = false;
-                        while (sendETX == false)
-                        {
-                            sendETX = ComElem.Send(ETX);
-                            Thread.Sleep(100);
-                        }
-                        break;
-                    }
-                }
-                while (mrstDataReceived.Wait(1000) == false)
-                {
-                    Log.WriteLog("Debug", "#. Data is not received in 1000ms", true);
-                    break;
-                }
+                        // 데이터 송신 실패.
+                        ComErrorEvent?.Invoke();
 
-                st.Stop();
-                int extra = (int)(TX_INTERVAL - st.ElapsedMilliseconds);
-                if (extra >= 0)
-                {
-                    Thread.Sleep(extra);
-                }
-                else
-                {
-                    Log.WriteLog("Debug", $"#. Data is not received in {TX_INTERVAL}ms. (Duration={(int)st.ElapsedMilliseconds}ms)", true);
+                        ++nRetry;
+
+                        Log.WriteLog("Debug", $"#. Send Fail. (Retry={nRetry})", true);
+                        Thread.Sleep((int)TX_INTERVAL);
+                    }
                 }
             }
         }

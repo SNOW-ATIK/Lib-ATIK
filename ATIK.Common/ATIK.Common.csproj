@@ -114,6 +114,12 @@
     <Compile Include="ComponentEtc\Fluidics\Vessel\Cmp_Vessel_Bmp.Designer.cs">
       <DependentUpon>Cmp_Vessel_Bmp.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentEtc\Form\Frm_ModifyDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Form\Frm_ModifyDate.designer.cs">
+      <DependentUpon>Frm_ModifyDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentEtc\KeyPad\KeyPadButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -238,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentEtc\Fluidics\Vessel\Cmp_Vessel_Bmp.resx">
       <DependentUpon>Cmp_Vessel_Bmp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Form\Frm_ModifyDate.resx">
+      <DependentUpon>Frm_ModifyDate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentEtc\KeyPad\KeyPadButton.resx">
       <DependentUpon>KeyPadButton.cs</DependentUpon>

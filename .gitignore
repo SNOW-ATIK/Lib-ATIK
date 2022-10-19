@@ -4,3 +4,11 @@ ATIK.Common/obj/
 ATIK.Device/obj/
 
 ATIK.Device/bin/
+
+ATIK.Common/.vs/
+
+ATIK.Communication/.vs/
+
+ATIK.Communication/obj/
+
+ATIK.Device/.vs/

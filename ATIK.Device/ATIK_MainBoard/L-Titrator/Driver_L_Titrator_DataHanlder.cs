@@ -17,6 +17,26 @@ namespace ATIK.Device.ATIK_MainBoard
             public bool IsLoaded { get; private set; }
             public bool IsOpened { get; private set; }
 
+            private object objLock_ComStatus = new object();
+            private bool _ComStatus = false;
+            public bool ComStatus
+            {
+                get
+                {
+                    lock (objLock_ComStatus)
+                    {
+                        return _ComStatus;
+                    }
+                }
+                set
+                {
+                    lock (objLock_ComStatus)
+                    {
+                        _ComStatus = value;
+                    }
+                }
+            }
+
             private MB_Protocol Protocol;
             private ATIK_MB_ComHandler ComHandler;
 
@@ -61,6 +81,7 @@ namespace ATIK.Device.ATIK_MainBoard
                 Init_TxFrame();
 
                 ComHandler.DataReceivedEvent += ComHandler_DataReceivedEvent;
+                ComHandler.ComErrorEvent += ComHandler_ComErrorEvent;
 
                 Set_Frame(TxFrame.Values.ToList());
 
@@ -82,21 +103,19 @@ namespace ATIK.Device.ATIK_MainBoard
                 int nLines = Enum.GetValues(typeof(LineOrder)).Length + 1;
                 if (recvData.Count != nLines)
                 {
+                    // #. Invalid Format
+                    ComStatus = false;
                     return;
                 }
 
-                ParsingRxData(recvData);
+
+
+                ComStatus = true;
             }
 
-            private void ParsingRxData(List<string> data)
+            private void ComHandler_ComErrorEvent()
             {
-                if (data[0] != ATIK_MB_ComHandler.STX || data[data.Count - 1] != ATIK_MB_ComHandler.ETX)
-                {
-                    // #. Invalid STX or ETX
-                    return;
-                }
-
-                // TBD. Necessary?
+                ComStatus = false;
             }
 
             // TBD. Valve, Syringe, Analog Output 등의 초기 상태를 정해야 한다.

@@ -8,8 +8,29 @@ namespace ATIK.Device.ATIK_MainBoard
 {
     public partial class DrvMB_L_Titrator : IMB_Driver
     {
-        private bool _IsInitialized = false;
-        public bool IsInitialized { get => _IsInitialized; }
+        public bool IsInitialized 
+        {
+            get
+            {
+                if (DataHandler == null)
+                {
+                    return false;
+                }
+                return DataHandler.IsLoaded & DataHandler.IsOpened;
+            }
+        }
+
+        public bool ComStatus
+        {
+            get
+            {
+                if (DataHandler == null)
+                {
+                    return false;
+                }
+                return DataHandler.ComStatus;
+            }
+        }
 
         private MB_Map Map;
         private MB_DataHandler DataHandler;
@@ -21,11 +42,6 @@ namespace ATIK.Device.ATIK_MainBoard
 
             // Init Com.
             DataHandler = new MB_DataHandler(DefinedMainBoards.L_Titrator.ToString(), comElemName);
-            _IsInitialized = DataHandler.IsLoaded & DataHandler.IsOpened;
-            if (_IsInitialized == false)
-            {
-                return;
-            }
         }
 
         // Protocol
