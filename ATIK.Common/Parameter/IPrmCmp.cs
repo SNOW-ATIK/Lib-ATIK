@@ -20,6 +20,6 @@ namespace ATIK
         int SplitterDistance { get; set; }
         void UpdateNamePlate();
         void Restore();
-        void ChangeLanguage_Title(string language, string title);
+        void ChangeLanguage_Title(Language language, string title);
     }
 }

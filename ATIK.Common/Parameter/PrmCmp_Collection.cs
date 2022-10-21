@@ -246,16 +246,19 @@ namespace ATIK
             SelectedUserItemChangedEvent?.Invoke(this, cmb_Values.SelectedItem);
         }
 
-        public void ChangeLanguage_Title(string language, string title)
+        public void ChangeLanguage_Title(Language language, string title)
         {
-            if (language == "ENG")
+            switch (language)
             {
-                lbl_PrmName.Font = new Font("Consolas", 12f, FontStyle.Bold);
+                case Language.ENG:
+                    lbl_PrmName.Font = new Font("Consolas", 12f, FontStyle.Bold);
+                    break;
+
+                case Language.KOR:
+                    lbl_PrmName.Font = new Font("맑은 고딕", 11f, FontStyle.Bold);
+                    break;
             }
-            else if (language == "KOR")
-            {
-                lbl_PrmName.Font = new Font("맑은 고딕", 11f, FontStyle.Bold);
-            }
+
             Prm_Name = title;
         }
 

@@ -162,15 +162,23 @@
     <Compile Include="ComponentEtc\MessageBox\MsgFrm_AskYesNo.designer.cs">
       <DependentUpon>MsgFrm_AskYesNo.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentEtc\Util\LifeTime\PartLifeTimeManager.cs" />
+    <Compile Include="ComponentEtc\Util\LifeTime\UsrCtrl_LifeTime.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ComponentEtc\Util\LifeTime\UsrCtrl_LifeTime.designer.cs">
+      <DependentUpon>UsrCtrl_LifeTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComponentEtc\Util\UsrCtrl_TimeNow.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ComponentEtc\Util\UsrCtrl_TimeNow.designer.cs">
       <DependentUpon>UsrCtrl_TimeNow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Define.cs" />
+    <Compile Include="Collection.cs" />
     <Compile Include="Handle_UI.cs" />
     <Compile Include="IniCfg\IniCfg.cs" />
+    <Compile Include="Interface_UI.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Math\DataHandling.cs" />
     <Compile Include="Math\Geometry.cs" />
@@ -182,6 +190,7 @@
     <Compile Include="ComponentEtc\KeyPad\Frm_NumPad.Designer.cs">
       <DependentUpon>Frm_NumPad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parameter\IParamPage.cs" />
     <Compile Include="Parameter\IPrmCmp.cs" />
     <Compile Include="Parameter\PrmCmp.cs" />
     <Compile Include="Parameter\PrmCmp_Collection.cs">
@@ -271,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentEtc\KeyPad\Frm_NumPad.resx">
       <DependentUpon>Frm_NumPad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentEtc\Util\LifeTime\UsrCtrl_LifeTime.resx">
+      <DependentUpon>UsrCtrl_LifeTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentEtc\Util\UsrCtrl_TimeNow.resx">
       <DependentUpon>UsrCtrl_TimeNow.cs</DependentUpon>

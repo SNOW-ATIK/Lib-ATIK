@@ -191,15 +191,28 @@ namespace ATIK
             }
         }
 
-        private bool CheckValidityOfDate(int year, int month, int day, int hour = 0, int minute = 0, int second = 0)
+        private bool CheckValidityOfDate(int year, int month, int day, int hour = 0, int minute = 0, int second = 0, bool showMsg = true)
         {
             if (DateTime.TryParse($"{year}-{month}-{day} {hour}:{minute}:{second}", out DateTime temp) == false)
             {
-                MsgFrm_NotifyOnly msgFrm = new MsgFrm_NotifyOnly("Invalid Date");
-                msgFrm.ShowDialog();
+                if (showMsg == true)
+                {
+                    MsgFrm_NotifyOnly msgFrm = new MsgFrm_NotifyOnly("Invalid Date");
+                    msgFrm.ShowDialog();
+                }
                 return false;
             }
             return true;
+        }
+
+        private void btn_Today_Click(object sender, EventArgs e)
+        {
+            CmpVal_Year.Prm_Value = DateTime.Now.Year;
+            CmpVal_Month.Prm_Value = DateTime.Now.Month;
+            CmpVal_Day.Prm_Value = DateTime.Now.Day;
+            CmpVal_Hour.Prm_Value = DateTime.Now.Hour;
+            CmpVal_Minute.Prm_Value = DateTime.Now.Minute;
+            CmpVal_Second.Prm_Value = DateTime.Now.Second;
         }
 
         private void btn_Apply_Click(object sender, EventArgs e)
@@ -227,6 +240,39 @@ namespace ATIK
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void btn_AddYear_Click(object sender, EventArgs e)
+        {
+            CmpVal_Year.Prm_Value = int.Parse((string)CmpVal_Year.Prm_Value) + 1;
+        }
+
+        private void btn_AddMonth_Click(object sender, EventArgs e)
+        {
+            int month = int.Parse((string)CmpVal_Month.Prm_Value) + 1;
+            if (month > 12)
+            {
+                btn_AddYear.PerformClick();
+                CmpVal_Month.Prm_Value = 1;
+            }
+            else
+            {
+                CmpVal_Month.Prm_Value = month;
+            }
+        }
+
+        private void btn_AddDay_Click(object sender, EventArgs e)
+        {
+            int day = int.Parse((string)CmpVal_Day.Prm_Value) + 1;
+            if (CheckValidityOfDate(int.Parse((string)CmpVal_Year.Prm_Value), int.Parse((string)CmpVal_Month.Prm_Value), day, 0, 0, 0, false) == true)
+            {
+                CmpVal_Day.Prm_Value = day;
+            }
+            else
+            {
+                CmpVal_Day.Prm_Value = 1;
+                btn_AddMonth.PerformClick();
+            }
         }
     }
 }
