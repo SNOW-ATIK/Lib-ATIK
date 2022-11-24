@@ -22,12 +22,12 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             set
             {
                 _HeadType = value;
-                Draw_State(_HeadType, Valve_Port.None);
+                Draw_State(_HeadType, Valve_PortDirection.None);
             }
         }
 
-        private Valve_Port _Valve_Open = Valve_Port.None;
-        public Valve_Port Valve_Open
+        private Valve_PortDirection _Valve_Open = Valve_PortDirection.None;
+        public Valve_PortDirection Valve_Open
         {
             get
             {
@@ -45,9 +45,9 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             InitializeComponent();
         }
 
-        public void Draw_State(Syringe_Head headType, Valve_Port openPort)
+        public void Draw_State(Syringe_Head headType, Valve_PortDirection openPort)
         {
-            if (headType == Syringe_Head.None || openPort == Valve_Port.None)
+            if (headType == Syringe_Head.None || openPort == Valve_PortDirection.None)
             {
                 return;
             }
@@ -55,14 +55,14 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             switch (headType)
             {
                 case Syringe_Head.LeftTopRight:
-                    if (openPort == Valve_Port.Bottom)
+                    if (openPort == Valve_PortDirection.Bottom)
                     {
                         throw new InvalidOperationException($"Head type doesn't have {openPort}");
                     }
                     break;
 
                 case Syringe_Head.LeftRight:
-                    if (openPort == Valve_Port.Top || openPort == Valve_Port.Bottom)
+                    if (openPort == Valve_PortDirection.Top || openPort == Valve_PortDirection.Bottom)
                     {
                         throw new InvalidOperationException($"Head type doesn't have {openPort}");
                     }
@@ -101,7 +101,7 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             return sCfg;
         }
 
-        private string Get_PortString(Valve_Port valvePort)
+        private string Get_PortString(Valve_PortDirection valvePort)
         {
             return valvePort.ToString().Substring(0, 1);
         }

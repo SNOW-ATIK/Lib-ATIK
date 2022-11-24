@@ -205,6 +205,19 @@ namespace ATIK.Device.ATIK_MainBoard
             return true;
         }
 
+        public bool Run_mL(Syringe_Command syringeCmd, bool sync = true)
+        {
+            RunCmdSuccess = false;
+            int volume_Digit = (int)(syringeCmd.Volume_mL * ScaleFactor);
+            RunSyringe = new System.Threading.Thread(RunSyringeProc) { IsBackground = true };
+            RunSyringe.Start(new object[] { syringeCmd.Flow, syringeCmd.Direction, volume_Digit, syringeCmd.Speed });
+            if (sync == true)
+            {
+                RunSyringe.Join();
+            }
+            return true;
+        }
+
         private void RunSyringeProc(object runInfo)
         {
             object[] info = (object[])runInfo;

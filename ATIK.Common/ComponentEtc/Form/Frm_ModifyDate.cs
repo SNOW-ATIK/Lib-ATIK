@@ -20,6 +20,32 @@ namespace ATIK
         {
             InitializeComponent();
 
+            OldValue = genDate.Value;
+            DateTime date = DateTime.Parse(genDate.Value);
+            Init(name, date, modifyTime);
+        }
+
+        public Frm_ModifyDate(string name, string strDate, bool modifyTime = false)
+        {
+            InitializeComponent();
+
+            OldValue = strDate;
+            DateTime date = DateTime.Parse(strDate);
+            Init(name, date, modifyTime);
+        }
+
+        public Frm_ModifyDate(string name, DateTime dateTime, bool modifyTime = false)
+        {
+            InitializeComponent();
+
+            string strDate = dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+            OldValue = strDate;
+            DateTime date = DateTime.Parse(strDate);
+            Init(name, date, modifyTime);
+        }
+
+        private void Init(string name, DateTime dateTime, bool modifyTime)
+        {
             ModifyTime = modifyTime;
             tableLayoutPanel4.Visible = modifyTime;
             if (modifyTime == false)
@@ -32,24 +58,22 @@ namespace ATIK
 
             lbl_Name.Text = name;
 
-            OldValue = genDate.Value;
             NewValue = OldValue;
 
-            DateTime date = DateTime.Parse(genDate.Value);
-            CmpVal_Year.Init_WithOutGenPrm("Year", date.Year);
+            CmpVal_Year.Init_WithOutGenPrm("Year", dateTime.Year);
             CmpVal_Year.ValueChangedEvent += CmpVal_Year_ValueChangedEvent;
-            CmpVal_Month.Init_WithOutGenPrm("Month", date.Month);
+            CmpVal_Month.Init_WithOutGenPrm("Month", dateTime.Month);
             CmpVal_Month.ValueChangedEvent += CmpVal_Month_ValueChangedEvent;
-            CmpVal_Day.Init_WithOutGenPrm("Day", date.Day);
+            CmpVal_Day.Init_WithOutGenPrm("Day", dateTime.Day);
             CmpVal_Day.ValueChangedEvent += CmpVal_Day_ValueChangedEvent;
 
             if (modifyTime == true)
             {
-                CmpVal_Hour.Init_WithOutGenPrm("Hour", date.Hour);
+                CmpVal_Hour.Init_WithOutGenPrm("Hour", dateTime.Hour);
                 CmpVal_Hour.ValueChangedEvent += CmpVal_Hour_ValueChangedEvent;
-                CmpVal_Minute.Init_WithOutGenPrm("Minute", date.Minute);
+                CmpVal_Minute.Init_WithOutGenPrm("Minute", dateTime.Minute);
                 CmpVal_Minute.ValueChangedEvent += CmpVal_Minute_ValueChangedEvent;
-                CmpVal_Second.Init_WithOutGenPrm("Second", date.Second);
+                CmpVal_Second.Init_WithOutGenPrm("Second", dateTime.Second);
                 CmpVal_Second.ValueChangedEvent += CmpVal_Second_ValueChangedEvent;
             }
             else
@@ -91,50 +115,6 @@ namespace ATIK
             //CmpVal_Hour.ChangeLanguage_Title(sLang, SigmaLanguage.View_Main.Page_Maint.DateTime_Hour);
             //CmpVal_Minute.ChangeLanguage_Title(sLang, SigmaLanguage.View_Main.Page_Maint.DateTime_Minute);
             //CmpVal_Second.ChangeLanguage_Title(sLang, SigmaLanguage.View_Main.Page_Maint.DateTime_Second);
-        }
-
-        public Frm_ModifyDate(string name, string strDate, bool modifyTime = false)
-        {
-            InitializeComponent();
-
-            ModifyTime = modifyTime;
-            tableLayoutPanel4.Visible = modifyTime;
-            if (modifyTime == false)
-            {
-                tableLayoutPanel1.RowStyles[3].Height = 0;
-                tableLayoutPanel1.RowStyles[4].Height = 0;
-
-                this.Height -= 65;
-            }
-
-            lbl_Name.Text = name;
-
-            OldValue = strDate;
-            NewValue = OldValue;
-
-            DateTime date = DateTime.Parse(strDate);
-            CmpVal_Year.Init_WithOutGenPrm("Year", date.Year);
-            CmpVal_Year.ValueChangedEvent += CmpVal_Year_ValueChangedEvent;
-            CmpVal_Month.Init_WithOutGenPrm("Month", date.Month);
-            CmpVal_Month.ValueChangedEvent += CmpVal_Month_ValueChangedEvent;
-            CmpVal_Day.Init_WithOutGenPrm("Day", date.Day);
-            CmpVal_Day.ValueChangedEvent += CmpVal_Day_ValueChangedEvent;
-
-            if (modifyTime == true)
-            {
-                CmpVal_Hour.Init_WithOutGenPrm("Hour", date.Hour);
-                CmpVal_Hour.ValueChangedEvent += CmpVal_Hour_ValueChangedEvent;
-                CmpVal_Minute.Init_WithOutGenPrm("Minute", date.Minute);
-                CmpVal_Minute.ValueChangedEvent += CmpVal_Minute_ValueChangedEvent;
-                CmpVal_Second.Init_WithOutGenPrm("Second", date.Second);
-                CmpVal_Second.ValueChangedEvent += CmpVal_Second_ValueChangedEvent;
-            }
-            else
-            {
-                CmpVal_Hour.Init_WithOutGenPrm("Hour", 0);
-                CmpVal_Minute.Init_WithOutGenPrm("Minute", 0);
-                CmpVal_Second.Init_WithOutGenPrm("Second", 0);
-            }
         }
 
         private void CmpVal_Year_ValueChangedEvent(object sender, object oldValue, object newValue)

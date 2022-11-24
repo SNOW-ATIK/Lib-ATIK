@@ -91,6 +91,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FRM_Notify";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FRM_Notify_YesNo_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MsgFrm_AskYesNo_FormClosed);
+            this.Shown += new System.EventHandler(this.MsgFrm_AskYesNo_Shown);
             this.ResumeLayout(false);
 
         }

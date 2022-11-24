@@ -12,29 +12,55 @@ namespace ATIK.Common.ComponentEtc.Fluidics
 {
     public partial class Cmp_Valve_3Way_Bmp : UserControl
     {
-        private Valve_Port _Valve_Common_Port = Valve_Port.None;
-        public Valve_Port Valve_Common_Port { get => _Valve_Common_Port; set => _Valve_Common_Port = value; }
+        public readonly Valve_Category Valve_Category = Valve_Category.ThreeWay;
+        public string Valve_Name = "NotDefined3Way";
 
         private Valve_3Way_Cfg _Valve_Config = Valve_3Way_Cfg.None;
         public Valve_3Way_Cfg Valve_Config
         {
-            get
-            {
-                return _Valve_Config;
-            }
+            get => _Valve_Config;
             set
             {
                 _Valve_Config = value;
-                InitBackground(_Valve_Config, Valve_Common_Port);
+                if (_Valve_Config != Valve_3Way_Cfg.None && _Valve_Common_Port != Valve_PortDirection.None)
+                {
+                    InitBackground(_Valve_Config, _Valve_Common_Port);
+                }
             }
         }
+
+        private Valve_PortDirection _Valve_Common_Port = Valve_PortDirection.None;
+        public Valve_PortDirection Valve_Common_Port 
+        {
+            get => _Valve_Common_Port;
+            set
+            {
+                _Valve_Common_Port = value;
+                if (_Valve_Config != Valve_3Way_Cfg.None && _Valve_Common_Port != Valve_PortDirection.None)
+                {
+                    InitBackground(_Valve_Config, _Valve_Common_Port);
+                }
+            }
+        }
+
+        public Dictionary<Valve_PortDirection, Valve_State> Port_State = new Dictionary<Valve_PortDirection, Valve_State>();
 
         public Cmp_Valve_3Way_Bmp()
         {
             InitializeComponent();
+
+            Port_State.Add(Valve_PortDirection.Bottom, Valve_State.Close);
+            Port_State.Add(Valve_PortDirection.Left, Valve_State.Close);
+            Port_State.Add(Valve_PortDirection.Right, Valve_State.Close);
+            Port_State.Add(Valve_PortDirection.Top, Valve_State.Close);
         }
 
-        public void Draw_State(Valve_Port port1, bool port1_state, Valve_Port port2, bool port2_state)
+        public void Init(string valveName)
+        {
+            Valve_Name = valveName;
+        }
+
+        public void Draw_State(Valve_PortDirection port1, bool port1_state, Valve_PortDirection port2, bool port2_state)
         {
             if (port1 == Valve_Common_Port || port2 == Valve_Common_Port)
             {
@@ -52,10 +78,24 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             if (port1_state == true && port2_state == true)
             {
                 sState = "Open_All";
+                Port_State.Keys.ToList().ForEach(key =>
+                {
+                    if (Port_State[key] != Valve_State.Common && Port_State[key] != Valve_State.NotExist)
+                    {
+                        Port_State[key] = Valve_State.Open;
+                    }
+                });
             }
             else if (port1_state == false && port2_state == false)
             {
                 sState = "Close_All";
+                Port_State.Keys.ToList().ForEach(key =>
+                {
+                    if (Port_State[key] != Valve_State.Common && Port_State[key] != Valve_State.NotExist)
+                    {
+                        Port_State[key] = Valve_State.Close;
+                    }
+                });
             }
             else
             {
@@ -69,10 +109,14 @@ namespace ATIK.Common.ComponentEtc.Fluidics
                 if (port1_state == true)
                 {
                     sState = $"Open_{sPort1}";
+                    Port_State[port1] = Valve_State.Open;
+                    Port_State[port2] = Valve_State.Close;
                 }
                 else // if Iport2_state == true)
                 {
                     sState = $"Open_{sPort2}";
+                    Port_State[port1] = Valve_State.Close;
+                    Port_State[port2] = Valve_State.Open;
                 }
             }
 
@@ -85,18 +129,32 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             }
         }
 
-        public void InitBackground(Valve_3Way_Cfg valveCfg, Valve_Port cmnPort)
+        public void InitBackground(Valve_3Way_Cfg valveCfg, Valve_PortDirection cmnPort)
         {
-            Valve_Common_Port = cmnPort;
-            if (Valve_Common_Port == Valve_Port.None)
+            switch (valveCfg)
             {
-                return;
+                case Valve_3Way_Cfg.TopRightBottom:
+                    Port_State[Valve_PortDirection.Left] = Valve_State.NotExist;
+                    break;
+
+                case Valve_3Way_Cfg.RightBottomLeft:
+                    Port_State[Valve_PortDirection.Top] = Valve_State.NotExist;
+                    break;
+
+                case Valve_3Way_Cfg.BottomLeftTop:
+                    Port_State[Valve_PortDirection.Right] = Valve_State.NotExist;
+                    break;
+
+                case Valve_3Way_Cfg.LeftTopRight:
+                    Port_State[Valve_PortDirection.Bottom] = Valve_State.NotExist;
+                    break;
             }
+            Port_State[cmnPort] = Valve_State.Common;
 
             string sCmnPort = Get_PortString(Valve_Common_Port);
             string sCfg = Get_CfgString(valveCfg);
             
-            string resourceName = $"Valve3Way_{sCfg}_Common_{sCmnPort}_ClosedAll";
+            string resourceName = $"Valve3Way_{sCfg}_Common_{sCmnPort}_Close_All";
             object obj = Properties.Resources.ResourceManager.GetObject(resourceName);
             if (obj != null)
             {
@@ -129,7 +187,7 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             return sCfg;
         }
 
-        private string Get_PortString(Valve_Port valvePort)
+        private string Get_PortString(Valve_PortDirection valvePort)
         {
             return valvePort.ToString().Substring(0, 1);
         }

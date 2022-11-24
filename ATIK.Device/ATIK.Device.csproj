@@ -95,6 +95,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ATIK_MainBoard\Device\Syringe\MB_Cmp_Syringe.resx">
+      <DependentUpon>MB_Cmp_Syringe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IO\Cmp_DIO.resx">
       <DependentUpon>Cmp_DIO.cs</DependentUpon>
     </EmbeddedResource>

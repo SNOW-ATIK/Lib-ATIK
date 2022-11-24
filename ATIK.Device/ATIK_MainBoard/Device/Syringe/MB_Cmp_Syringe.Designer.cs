@@ -587,11 +587,11 @@ namespace ATIK.Device.ATIK_MainBoard
             this.btn_Home.UseVisualStyleBackColor = false;
             this.btn_Home.Click += new System.EventHandler(this.btn_Home_Click);
             // 
-            // UsrCtrl_Syringe
+            // MB_Cmp_Syringe
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.tbl_MainLayout);
-            this.Name = "UsrCtrl_Syringe";
+            this.Name = "MB_Cmp_Syringe";
             this.Size = new System.Drawing.Size(174, 280);
             this.tbl_MainLayout.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);

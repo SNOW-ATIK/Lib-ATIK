@@ -152,6 +152,9 @@ namespace ATIK
         public IParam GenParam { get; set; }
         private Array Collection;
 
+        private bool _EnableModifyingValue = true;
+        public bool EnableModifyingValue { get => _EnableModifyingValue; private set => _EnableModifyingValue = value; }
+
         public PrmCmp_Collection()
         {
             InitializeComponent();
@@ -238,12 +241,19 @@ namespace ATIK
             cmb_Values.SelectedIndexChanged -= Cmb_Values_SelectedIndexChanged;
 
             cmb_Values.DataSource = Collection;
-            cmb_Values.SelectedIndexChanged += Cmb_Values_SelectedIndexChanged;
             if (initValue != null)
             {
                 Prm_Value = initValue;
             }
-            SelectedUserItemChangedEvent?.Invoke(this, cmb_Values.SelectedItem);
+            else
+            {
+                cmb_Values.SelectedItem = null;
+            }
+            cmb_Values.SelectedIndexChanged += Cmb_Values_SelectedIndexChanged;
+            if (cmb_Values.SelectedItem != null)
+            {
+                SelectedUserItemChangedEvent?.Invoke(this, cmb_Values.SelectedItem);
+            }
         }
 
         public void ChangeLanguage_Title(Language language, string title)
@@ -266,17 +276,25 @@ namespace ATIK
         {
             this.Enabled = enb;
 
-            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.LightGray);
+            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.DarkGray);
             cmb_Values.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.Window) : Color.FromKnownColor(KnownColor.LightGray);
         }
 
         public void EnableModifying(bool paramEnabled, bool modifyEnabled)
         {
-            this.Enabled = paramEnabled;
-            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.LightGray);
+            if (paramEnabled == false && modifyEnabled == false)
+            {
+                this.Enabled = false;
+            }
+            else
+            {
+                this.Enabled = true;
+            }
+            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.DarkGray);
 
-            cmb_Values.Enabled = modifyEnabled;
-            cmb_Values.BackColor = cmb_Values.Enabled == true ? Color.FromKnownColor(KnownColor.Window) : Color.FromKnownColor(KnownColor.LightGray);
+            EnableModifyingValue = modifyEnabled;
+            cmb_Values.Enabled = EnableModifyingValue;
+            cmb_Values.BackColor = paramEnabled == true && modifyEnabled == true ? Color.FromKnownColor(KnownColor.Window) : Color.FromKnownColor(KnownColor.LightGray);
         }
 
         public List<object> Get_Collection()

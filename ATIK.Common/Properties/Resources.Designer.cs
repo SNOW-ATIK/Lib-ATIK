@@ -573,6 +573,46 @@ namespace ATIK.Common.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_BLT_Common_B_Close_All {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_BLT_Common_B_Close_All", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_BLT_Common_B_Open_All {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_BLT_Common_B_Open_All", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_BLT_Common_B_Open_L {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_BLT_Common_B_Open_L", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_BLT_Common_B_Open_T {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_BLT_Common_B_Open_T", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Valve3Way_BLT_Common_T_Close_All {
             get {
                 object obj = ResourceManager.GetObject("Valve3Way_BLT_Common_T_Close_All", resourceCulture);
@@ -646,6 +686,46 @@ namespace ATIK.Common.Properties {
         internal static System.Drawing.Bitmap Valve3Way_RBL_Common_L_Open_R {
             get {
                 object obj = ResourceManager.GetObject("Valve3Way_RBL_Common_L_Open_R", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_TRB_Common_R_Close_All {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_TRB_Common_R_Close_All", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_TRB_Common_R_Open_All {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_TRB_Common_R_Open_All", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_TRB_Common_R_Open_B {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_TRB_Common_R_Open_B", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Valve3Way_TRB_Common_R_Open_T {
+            get {
+                object obj = ResourceManager.GetObject("Valve3Way_TRB_Common_R_Open_T", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

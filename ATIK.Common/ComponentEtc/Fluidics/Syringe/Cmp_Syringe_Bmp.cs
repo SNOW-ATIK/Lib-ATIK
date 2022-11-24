@@ -12,6 +12,8 @@ namespace ATIK.Common.ComponentEtc.Fluidics
 {
     public partial class Cmp_Syringe_Bmp : UserControl
     {
+        private const int DisplayResolution = 10;
+
         private Syringe_Color _SyringeColor = Syringe_Color.None;
         public Syringe_Color SyringeColor
         {
@@ -45,9 +47,18 @@ namespace ATIK.Common.ComponentEtc.Fluidics
             InitializeComponent();
         }
 
-        public void Draw_State(Syringe_Color color, int remains)
+        public void Draw_State(Syringe_Color color, int remainsPercentage)
         {
-            string resourceName = $"Syringe_{color}_{remains / 10 * 10}";
+            if (remainsPercentage > 0 && remainsPercentage < DisplayResolution)
+            {
+                remainsPercentage = DisplayResolution;
+            }
+            else if (remainsPercentage < 100 && remainsPercentage > 100 - DisplayResolution)
+            {
+                remainsPercentage = 100 - DisplayResolution;
+            }
+
+            string resourceName = $"Syringe_{color}_{remainsPercentage / DisplayResolution * DisplayResolution}";
             object obj = Properties.Resources.ResourceManager.GetObject(resourceName);
             if (obj != null)
             {

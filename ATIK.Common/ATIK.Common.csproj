@@ -108,6 +108,7 @@
     <Compile Include="ComponentEtc\Fluidics\Valves\Cmp_Valve_3Way_Bmp.Designer.cs">
       <DependentUpon>Cmp_Valve_3Way_Bmp.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentEtc\Fluidics\Valves\ICmpValve.cs" />
     <Compile Include="ComponentEtc\Fluidics\Vessel\Cmp_Vessel_Bmp.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -144,6 +145,7 @@
     <Compile Include="ComponentEtc\Label\Lbl_MoveTitle.Designer.cs">
       <DependentUpon>Lbl_MoveTitle.cs</DependentUpon>
     </Compile>
+    <Compile Include="ComponentEtc\MessageBox\IMsgFrm.cs" />
     <Compile Include="ComponentEtc\MessageBox\MsgFrm_PasswordIn.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,11 +164,11 @@
     <Compile Include="ComponentEtc\MessageBox\MsgFrm_AskYesNo.designer.cs">
       <DependentUpon>MsgFrm_AskYesNo.cs</DependentUpon>
     </Compile>
-    <Compile Include="ComponentEtc\Util\LifeTime\PartLifeTimeManager.cs" />
-    <Compile Include="ComponentEtc\Util\LifeTime\UsrCtrl_LifeTime.cs">
+    <Compile Include="LifeTime\PartLifeTimeManager.cs" />
+    <Compile Include="LifeTime\UsrCtrl_LifeTime.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ComponentEtc\Util\LifeTime\UsrCtrl_LifeTime.designer.cs">
+    <Compile Include="LifeTime\UsrCtrl_LifeTime.designer.cs">
       <DependentUpon>UsrCtrl_LifeTime.cs</DependentUpon>
     </Compile>
     <Compile Include="ComponentEtc\Util\UsrCtrl_TimeNow.cs">
@@ -281,7 +283,7 @@
     <EmbeddedResource Include="ComponentEtc\KeyPad\Frm_NumPad.resx">
       <DependentUpon>Frm_NumPad.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ComponentEtc\Util\LifeTime\UsrCtrl_LifeTime.resx">
+    <EmbeddedResource Include="LifeTime\UsrCtrl_LifeTime.resx">
       <DependentUpon>UsrCtrl_LifeTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComponentEtc\Util\UsrCtrl_TimeNow.resx">
@@ -513,6 +515,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Vessel_Green_100.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Alarms\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_B_Open_L.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_B_Open_T.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_B_Close_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_BLT_Common_B_Open_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_R_Open_B.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_R_Open_T.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_R_Close_All.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Valve3Way_TRB_Common_R_Open_All.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

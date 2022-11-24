@@ -85,7 +85,7 @@ namespace ATIK
             this.lbl_PrmValueString.Location = new System.Drawing.Point(-1, -1);
             this.lbl_PrmValueString.Margin = new System.Windows.Forms.Padding(0);
             this.lbl_PrmValueString.Name = "lbl_PrmValueString";
-            this.lbl_PrmValueString.Size = new System.Drawing.Size(153, 25);
+            this.lbl_PrmValueString.Size = new System.Drawing.Size(155, 25);
             this.lbl_PrmValueString.TabIndex = 1;
             this.lbl_PrmValueString.Text = "Prm Value";
             this.lbl_PrmValueString.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -99,6 +99,7 @@ namespace ATIK
             this.MinimumSize = new System.Drawing.Size(252, 27);
             this.Name = "PrmCmp_Value";
             this.Size = new System.Drawing.Size(250, 25);
+            this.EnabledChanged += new System.EventHandler(this.PrmCmp_Value_EnabledChanged);
             this.SizeChanged += new System.EventHandler(this.PrmCmp_SizeChanged);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);

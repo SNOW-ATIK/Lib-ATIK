@@ -16,6 +16,7 @@ namespace ATIK.Device.ATIK_MainBoard
             public string LogicalName { get; private set; }
             public bool IsLoaded { get; private set; }
             public bool IsOpened { get; private set; }
+            public bool IsInterlockEnabled { get; private set; }
 
             private object objLock_ComStatus = new object();
             private bool _ComStatus = false;
@@ -42,9 +43,11 @@ namespace ATIK.Device.ATIK_MainBoard
 
             private ConcurrentDictionary<LineOrder, string> TxFrame = new ConcurrentDictionary<LineOrder, string>();
 
-            public MB_DataHandler(string boardID, string comElemName)
+            public MB_DataHandler(string boardID, string comElemName, bool interlockEnabled = true)
             {
                 LogicalName = $"{boardID}-{comElemName}";
+                IsInterlockEnabled = interlockEnabled;
+
                 // Load Protocol
                 Protocol = new MB_Protocol($@"Config\Device\ATIK_MainBoard\{boardID}\Protocol.xml", "Protocol");
                 if (Protocol.IsLoaded == false)
@@ -82,6 +85,8 @@ namespace ATIK.Device.ATIK_MainBoard
 
                 ComHandler.DataReceivedEvent += ComHandler_DataReceivedEvent;
                 ComHandler.ComErrorEvent += ComHandler_ComErrorEvent;
+                ComHandler.PassInterlockEvent += ComHandler_InterlockPassEvent;
+                ComHandler.RedirectTxPacketEvent += ComHandler_RedirectTxPacketEvent;
 
                 Set_Frame(TxFrame.Values.ToList());
 
@@ -98,17 +103,60 @@ namespace ATIK.Device.ATIK_MainBoard
                 }
             }
 
+            public void Enable_Interlock(bool enable)
+            {
+                IsInterlockEnabled = enable;
+            }
+
+            private bool ComHandler_InterlockPassEvent()
+            {
+                if (IsInterlockEnabled == true)
+                {
+                    bool bLeak = Get_Bit(LineOrder.Alarm_Input, 0) == false;     // Leak_1(Leak)'s BitOrder is 0.
+                    if (bLeak == true)
+                    {
+                        Log.WriteLog("Error", $"Check Leak.", true);
+                    }
+
+                    bool bOverFlow = Get_Bit(LineOrder.Alarm_Input, 3) == false; // Lever_2(OverFlow)'s BitOrder is 3.
+                    if (bOverFlow == true)
+                    {
+                        Log.WriteLog("Error", $"Check OverFlow.", true);
+                    }
+
+                    if (bLeak == true || bOverFlow == true)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            private void ComHandler_RedirectTxPacketEvent()
+            {
+                // Close DIW_To_6Way
+                Set_Bit(LineOrder.Solenoid_Output, 0, false);
+
+                // Close DIW_To_Vessel
+                Set_Bit(LineOrder.Solenoid_Output, 1, false);
+
+                // Close Slurry_To_3Way
+                Set_Bit(LineOrder.Solenoid_Output, 2, false);
+
+                // Close Ceric_To_3Way
+                Set_Bit(LineOrder.Solenoid_Output, 3, false);
+            }
+
             private void ComHandler_DataReceivedEvent(List<string> recvData)
             {
-                int nLines = Enum.GetValues(typeof(LineOrder)).Length + 1;
+                int nLines = Enum.GetValues(typeof(LineOrder)).Length;
                 if (recvData.Count != nLines)
                 {
                     // #. Invalid Format
+                    Log.WriteLog("Error", $"Line Count is not matched. (recv={recvData.Count}, collections={nLines})");
                     ComStatus = false;
                     return;
                 }
-
-
 
                 ComStatus = true;
             }

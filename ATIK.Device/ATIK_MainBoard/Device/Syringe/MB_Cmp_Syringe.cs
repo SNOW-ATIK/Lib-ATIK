@@ -14,6 +14,34 @@ namespace ATIK.Device.ATIK_MainBoard
 {
     public partial class MB_Cmp_Syringe : UserControl
     {
+        private bool _ShowName = true;
+        public bool ShowName
+        {
+            get
+            {
+                return _ShowName;
+            }
+            set
+            {
+                _ShowName = value;
+                tbl_MainLayout.RowStyles[0].Height = _ShowName == true ? 27 : 0;
+            }
+        }
+        private bool _ShowCurrentVolume = true;
+        public bool ShowCurrentVolume
+        {
+            get
+            {
+                return _ShowCurrentVolume;
+            }
+            set
+            {
+                _ShowCurrentVolume = value;
+                tbl_InjVol.ColumnStyles[0].Width = _ShowCurrentVolume == true ? 50 : 100;
+                tbl_InjVol.ColumnStyles[1].Width = _ShowCurrentVolume == true ? 50 : 0;
+            }
+        }
+
         private MB_Elem_Syringe MySyringe;
         public string LogicalName
         {
@@ -43,7 +71,7 @@ namespace ATIK.Device.ATIK_MainBoard
             SetElem(syringe, cmpForControl);
         }
 
-        public void SetElem(MB_Elem_Syringe syringe, bool cmpForControl = true)
+        public void SetElem(MB_Elem_Syringe syringe, bool cmpForControl = true, bool showName = true)
         {
             MySyringe = syringe;
             CmpForControl = cmpForControl;
@@ -61,25 +89,23 @@ namespace ATIK.Device.ATIK_MainBoard
                 tbl_MainLayout.RowStyles[tbl_MainLayout.RowCount - 2].Height = 4;
                 tbl_MainLayout.RowStyles[tbl_MainLayout.RowCount - 1].Height = 42;
 
-                tbl_InjVol.ColumnStyles[0].Width = 50;
-                tbl_InjVol.ColumnStyles[1].Width = 50;
+                ShowCurrentVolume = true;
             }
             else
             {
                 tbl_MainLayout.RowStyles[tbl_MainLayout.RowCount - 2].Height = 0;
                 tbl_MainLayout.RowStyles[tbl_MainLayout.RowCount - 1].Height = 0;
 
-                tbl_InjVol.ColumnStyles[0].Width = 100;
-                tbl_InjVol.ColumnStyles[1].Width = 0;
+                ShowCurrentVolume = false;
             }
         }
 
         public void UpdateState()
         {
-            if (CmpForControl == false)
-            {
-                throw new InvalidOperationException();
-            }
+            //if (CmpForControl == false)
+            //{
+            //    throw new InvalidOperationException();
+            //}
             var PositionRtn = MySyringe.Get_Volume_mL();
             if (PositionRtn.IsValid == true)
             {
@@ -479,6 +505,17 @@ namespace ATIK.Device.ATIK_MainBoard
             {
                 MySyringe.Run_mL(MB_SyringeFlow.Dispense, MB_SyringeDirection.Out, rtn.Volume_mL, 15);
             }
+        }
+
+        public void EnableEdit(bool enb)
+        {
+            chk_Pick.Enabled = enb;
+            chk_Dispense.Enabled = enb;
+            chk_In.Enabled = enb;
+            chk_Out.Enabled = enb;
+            chk_Ext.Enabled = enb;
+            btn_SetSpeed.Enabled = enb;
+            btn_SetInjectionVolume.Enabled = enb;
         }
     }
 }

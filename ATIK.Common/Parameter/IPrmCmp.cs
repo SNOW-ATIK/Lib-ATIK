@@ -10,6 +10,8 @@ namespace ATIK
 {
     public interface IPrmCmp
     {
+        void EnableParameter(bool enb);
+        void EnableModifying(bool enb, bool modify);
         Color Color_Name { get; set; }
         Color Color_Value { get; set; }
         string Prm_Name { get; set; }

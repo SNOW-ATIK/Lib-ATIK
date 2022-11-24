@@ -11,7 +11,7 @@ namespace ATIK
         void Restore();
         void UpdateChangedStatus();
         void SaveAllParams(bool askSave);
-        bool CheckParamChanged();
+        bool IsParamChanged();
     }
 
     public class ParamPageUtil

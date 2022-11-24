@@ -32,9 +32,17 @@ namespace ATIK.Device.ATIK_MainBoard
         private ConcurrentQueue<string> qReceive = new ConcurrentQueue<string>();
         private Thread thrReceive;
 
-        // ComCheck
+        // Com Check
         public delegate void ComErrorDelegate();
         public event ComErrorDelegate ComErrorEvent;
+
+        // Interlock Check
+        public delegate bool PassInterlockDelegate();
+        public event PassInterlockDelegate PassInterlockEvent;
+
+        // Redirect TxPacket when Overflow and Leak
+        public delegate void RedirectTxPacketDelegate();
+        public event RedirectTxPacketDelegate RedirectTxPacketEvent;
 
         // Frame
         private object objLock_FrameReceiveStart = new object();
@@ -106,9 +114,6 @@ namespace ATIK.Device.ATIK_MainBoard
 
         private void Start_ComThread()
         {
-            TxThread = new Thread(TxProcess) { IsBackground = true };
-            TxThread.Start();
-
             tmr_ReceiveTimeCheck.Enabled = false;
             tmr_ReceiveTimeCheck.AutoReset = true;
             tmr_ReceiveTimeCheck.Interval = 5000;
@@ -116,6 +121,9 @@ namespace ATIK.Device.ATIK_MainBoard
 
             thrReceive = new Thread(DataReceivedProcess) { IsBackground = true };
             thrReceive.Start();
+
+            TxThread = new Thread(TxProcess) { IsBackground = true };
+            TxThread.Start();
 
             ComElem.DataReceivedEvent += Comport_DataReceivedEvent;
         }
@@ -188,6 +196,7 @@ namespace ATIK.Device.ATIK_MainBoard
             return state;
         }
 
+        private int SendCnt = 0;
         private void TxProcess()
         {
             System.Diagnostics.Stopwatch st = new System.Diagnostics.Stopwatch();
@@ -213,6 +222,15 @@ namespace ATIK.Device.ATIK_MainBoard
                     int nSend = 0;
                     mrstDataReceived.Reset();
 
+                    // 부팅 직후엔 수신 패킷이 없으므로 Interlock을 확인하지 않는다.
+                    if (SendCnt > 0)
+                    {
+                        if (PassInterlockEvent?.Invoke() == false)
+                        {
+                            RedirectTxPacketEvent?.Invoke();
+                        }
+                    }
+
                     for (int i = 0; i < TxPacket.Count; i++)
                     {
                         bool sent = ComElem.Send(TxPacket[i]);
@@ -231,6 +249,12 @@ namespace ATIK.Device.ATIK_MainBoard
                                 Thread.Sleep(100);
                             }
                             break;
+                        }
+
+                        ++SendCnt;
+                        if (SendCnt == int.MaxValue)
+                        {
+                            SendCnt = 1;
                         }
                     }
 

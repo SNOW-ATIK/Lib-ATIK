@@ -10,7 +10,8 @@ namespace ATIK
     public enum LifeTimeMngType
     { 
         Period,
-        Count
+        Count,
+        Both
     }
 
     public class PartsLifeTimeManager
@@ -58,7 +59,7 @@ namespace ATIK
             return true;
         }
 
-        public static void IncreaseMeasureCount()
+        public static void IncreaseCount_All()
         {
             LifeTimeMngList.ForEach(subj =>
             {
@@ -113,7 +114,8 @@ namespace ATIK
                     case LifeTimeMngType.Period:
                         Gen_Period_Current.Set_ValueObject(DateTime.Now.ToString("yyyy-MM-dd"), true);
                         DateTime dtSince = DateTime.Parse(Gen_Period_Since.Get_OriginalValue());
-                        DateTime dtCurrent = DateTime.Parse(Gen_Period_Current.Get_OriginalValue());
+                        //DateTime dtCurrent = DateTime.Parse(Gen_Period_Current.Get_OriginalValue());
+                        DateTime dtCurrent = DateTime.Parse(Gen_Period_Current.Value);
                         DateTime dtLast = DateTime.Parse(Gen_Period_Last.Get_OriginalValue());
 
                         if ((dtLast - dtSince).TotalSeconds <= 0)
@@ -128,16 +130,24 @@ namespace ATIK
 
                     case LifeTimeMngType.Count:
                         int nSince = Gen_Count_Since.Get_OriginalValue();
-                        int nCurrent = Gen_Count_Current.Get_OriginalValue();
+                        //int nCurrent = Gen_Count_Current.Get_OriginalValue();
+                        int nCurrent = Gen_Count_Current.Value;
                         int nLast = Gen_Count_Last.Get_OriginalValue();
 
-                        if (nLast - nSince <= 0)
+                        if (nCurrent - nLast >= 0)
                         {
                             rate = 0;
                         }
                         else
                         {
-                            rate = (double)(nLast - nCurrent) / (nLast - nSince);
+                            if (nLast - nSince <= 0)
+                            {
+                                rate = 0;
+                            }
+                            else
+                            {
+                                rate = (double)(nLast - nCurrent) / (nLast - nSince);
+                            }
                         }
                         break;
                 }
@@ -162,6 +172,11 @@ namespace ATIK
             Gen_Count_Since = genCountSince;
             Gen_Count_Current = genCountCurrent;
             Gen_Count_Last = genCountLast;
+        }
+
+        public void IncreaseCount()
+        {
+            Gen_Count_Current.Set_ValueObject(Gen_Count_Current.Value + 1, true);
         }
     }
 }

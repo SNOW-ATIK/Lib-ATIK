@@ -58,6 +58,33 @@ namespace ATIK
             }
         }
 
+        [Category("ATIK Properties")]
+        [DisplayName("Value Text Align")]
+        public ContentAlignment ValueTextAlign
+        {
+            get
+            {
+                if (ValueEditor != null && ValueEditor.GetType() == typeof(Label))
+                {
+                    Label lbl = (Label)ValueEditor;
+                    return lbl.TextAlign;
+                }
+                throw new Exception("Can not set Alignment.");
+            }
+            set
+            {
+                if (ValueEditor != null && ValueEditor.GetType() == typeof(Label))
+                {
+                    Label lbl = (Label)ValueEditor;
+                    lbl.TextAlign = value;
+                }
+            }
+        }
+
+        [Category("ATIK Properties")]
+        [DisplayName("Name Text Align")]
+        public ContentAlignment NameTextAlign { get => lbl_PrmName.TextAlign; set => lbl_PrmName.TextAlign = value; }
+
         public delegate void UIInvoke_SetValueObject(object value, bool saveDirect);
         private void SetValueObject(object value, bool saveDirect)
         {
@@ -174,7 +201,16 @@ namespace ATIK
                     ValueEditor.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
                     ValueEditor.BackColor = Color.FromKnownColor(KnownColor.White);
                     ValueEditor.Font = new Font("Consolas", 12f, FontStyle.Bold);
-                    ValueEditor.Location = new Point(-1, 0);
+                    switch (Orientation)
+                    {
+                        case Orientation.Horizontal:
+                            ValueEditor.Location = new Point(-1, 0);
+                            break;
+
+                        case Orientation.Vertical:
+                            ValueEditor.Location = new Point(-1, -1);
+                            break;
+                    }
                     ValueEditor.Size = new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height);
                     //ValueEditor.Dock = DockStyle.Fill;
                     splitContainer1.Panel2.Controls.Add(ValueEditor);
@@ -266,14 +302,17 @@ namespace ATIK
                     switch (splitContainer1.Orientation)
                     {
                         case Orientation.Horizontal:
+                            lbl_PrmName.Location = new Point(-1, 0);
                             lbl_PrmName.Size = new Size(splitContainer1.Panel1.Width + 1, splitContainer1.Panel1.Height);
                             ValueEditor.Location = new Point(-1, 0);
                             break;
 
                         case Orientation.Vertical:
                             lbl_PrmName.Location = new Point(-1, -1);
+                            //lbl_PrmName.Size = new Size(splitContainer1.Panel1.Width + 1, splitContainer1.Panel1.Height);
+                            //ValueEditor.Location = new Point(-1, -1);
                             lbl_PrmName.Size = new Size(splitContainer1.Panel1.Width + 1, splitContainer1.Panel1.Height);
-                            ValueEditor.Location = new Point(-1, -1);
+                            ValueEditor.Location = new Point(0, -1);
                             break;
                     }
                     splitContainer1.Panel2.Controls.Add(ValueEditor);
@@ -378,7 +417,8 @@ namespace ATIK
         public IParam GenParam { get; set; }
         private Control ValueEditor = new Control();
 
-        public bool EnableModifyingValue { get; private set; }
+        private bool _EnableModifyingValue = true;
+        public bool EnableModifyingValue { get => _EnableModifyingValue; private set => _EnableModifyingValue = value; }
 
         public PrmCmp_Value()
         {
@@ -439,19 +479,25 @@ namespace ATIK
         public void EnableParameter(bool enb)
         {
             this.Enabled = enb;
-            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.LightGray);
-            ValueEditor.BackColor = this.Enabled == true && EnableModifyingValue == true ? Color.FromKnownColor(KnownColor.Window) : Color.FromKnownColor(KnownColor.LightGray);
+            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.DarkGray);
+            ValueEditor.BackColor = this.Enabled == true && EnableModifyingValue == true ? Color.FromKnownColor(KnownColor.White) : Color.FromKnownColor(KnownColor.LightGray);
         }
 
         public void EnableModifying(bool paramEnabled, bool modifyEnabled)
         {
-            this.Enabled = paramEnabled;
-            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.LightGray);
+            if (paramEnabled == false && modifyEnabled == false)
+            {
+                this.Enabled = false;
+            }
+            else
+            {
+                this.Enabled = true;
+            }
+            lbl_PrmName.BackColor = this.Enabled == true ? Color.FromKnownColor(KnownColor.LemonChiffon) : Color.FromKnownColor(KnownColor.DarkGray);
 
             EnableModifyingValue = modifyEnabled;
-
-            ValueEditor.Enabled = modifyEnabled;
-            ValueEditor.BackColor = ValueEditor.Enabled == true ? Color.FromKnownColor(KnownColor.Window) : Color.FromKnownColor(KnownColor.LightGray);
+            ValueEditor.Enabled = EnableModifyingValue;
+            ValueEditor.BackColor = paramEnabled == true && modifyEnabled == true ? Color.FromKnownColor(KnownColor.White) : Color.FromKnownColor(KnownColor.LightGray);
         }
 
         private void ValueEditor_Click(object sender, EventArgs e)
@@ -557,6 +603,12 @@ namespace ATIK
             {
                 GenParam.Set_ValueObject(GenParam.ValueObject_Original, false);
             }
+            UpdateNamePlate();
+        }
+
+        private void PrmCmp_Value_EnabledChanged(object sender, EventArgs e)
+        {
+            // TBD. Change Background Color
         }
     }
 }

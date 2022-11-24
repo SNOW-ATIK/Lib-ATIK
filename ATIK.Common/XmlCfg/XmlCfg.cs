@@ -25,6 +25,7 @@ namespace ATIK
 
     public class XmlCfgPrm
     {
+        private object objLock_Access = new object();
         private XmlDocument XmlPrm;
         public bool XmlLoaded { get; private set; }
         public string FileName { get; private set; }
@@ -66,8 +67,11 @@ namespace ATIK
                 {
                     return false;
                 }
-                XmlPrm = new XmlDocument();
-                XmlPrm.Load(fileName);
+                lock(objLock_Access)
+                {
+                    XmlPrm = new XmlDocument();
+                    XmlPrm.Load(fileName);
+                }
 
                 return true;
             }
@@ -81,7 +85,10 @@ namespace ATIK
         {
             if (XmlPrm != null)
             {
-                XmlPrm.Save(FileName);
+                lock (objLock_Access)
+                {
+                    XmlPrm.Save(FileName);
+                }
             }
         }
 
@@ -89,7 +96,10 @@ namespace ATIK
         {
             if (XmlPrm != null)
             {
-                XmlPrm.Save(filename);
+                lock (objLock_Access)
+                {
+                    XmlPrm.Save(filename);
+                }
             }
         }
 
@@ -112,11 +122,14 @@ namespace ATIK
                         if (i < subj.Length - 2) nodes += "/";
                     }
                 }
-                XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
-                
-                foreach (XmlNode xn in xnList)
+                lock (objLock_Access)
                 {
-                    return xn[subj[subj.Length - 1]];
+                    XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
+
+                    foreach (XmlNode xn in xnList)
+                    {
+                        return xn[subj[subj.Length - 1]];
+                    }
                 }
             }
             catch
@@ -145,10 +158,13 @@ namespace ATIK
                         if (i < subj.Length - 2) nodes += "/";
                     }
                 }
-                XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
-                foreach (XmlNode xn in xnList)
+                lock (objLock_Access)
                 {
-                    ret = xn[subj[subj.Length - 1]].InnerText;
+                    XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
+                    foreach (XmlNode xn in xnList)
+                    {
+                        ret = xn[subj[subj.Length - 1]].InnerText;
+                    }
                 }
             }
             catch (Exception e)
@@ -173,11 +189,14 @@ namespace ATIK
                     nodes += subj[i];
                     if (i < subj.Length - 2) nodes += "/";
                 }
-                XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
-                foreach (XmlNode xn in xnList)
+                lock (objLock_Access)
                 {
-                    xn.InnerText = subj[subj.Length - 1];
-                    ret = xn.InnerText;
+                    XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
+                    foreach (XmlNode xn in xnList)
+                    {
+                        xn.InnerText = subj[subj.Length - 1];
+                        ret = xn.InnerText;
+                    }
                 }
                 Save();
             }
@@ -201,11 +220,14 @@ namespace ATIK
                     nodes += subj[i];
                     if (i < subj.Count - 2) nodes += "/";
                 }
-                XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
-                foreach (XmlNode xn in xnList)
+                lock (objLock_Access)
                 {
-                    xn.InnerText = subj[subj.Count - 1];
-                    ret = xn.InnerText;
+                    XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
+                    foreach (XmlNode xn in xnList)
+                    {
+                        xn.InnerText = subj[subj.Count - 1];
+                        ret = xn.InnerText;
+                    }
                 }
                 Save();
             }
@@ -229,10 +251,13 @@ namespace ATIK
                     nodes += subj[i];
                     if (i < subj.Length - 2) nodes += "/";
                 }
-                XmlNode xnode = XmlPrm.SelectSingleNode(nodes);
-                XmlElement elem = XmlPrm.CreateElement(subj[subj.Length - 1]);
-                elem.InnerText = "";
-                xnode.AppendChild(elem);
+                lock (objLock_Access)
+                {
+                    XmlNode xnode = XmlPrm.SelectSingleNode(nodes);
+                    XmlElement elem = XmlPrm.CreateElement(subj[subj.Length - 1]);
+                    elem.InnerText = "";
+                    xnode.AppendChild(elem);
+                }
                 Save();
             }
             catch
@@ -252,15 +277,18 @@ namespace ATIK
                     nodes += subj[i];
                     if (i < subj.Length - 3) nodes += "/";
                 }
-                XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
-                foreach (XmlNode xn in xnList)
+                lock (objLock_Access)
                 {
-                    if (xn.InnerXml.Contains(string.Format("<{0}>", subj[subj.Length - 2])) == false)
+                    XmlNodeList xnList = XmlPrm.SelectNodes(nodes);
+                    foreach (XmlNode xn in xnList)
                     {
-                        XmlElement elem = XmlPrm.CreateElement(subj[subj.Length - 2]);
-                        elem.InnerText = subj[subj.Length - 1];
-                        xn.AppendChild(elem);
-                        break;
+                        if (xn.InnerXml.Contains(string.Format("<{0}>", subj[subj.Length - 2])) == false)
+                        {
+                            XmlElement elem = XmlPrm.CreateElement(subj[subj.Length - 2]);
+                            elem.InnerText = subj[subj.Length - 1];
+                            xn.AppendChild(elem);
+                            break;
+                        }
                     }
                 }
                 Save();
@@ -277,7 +305,10 @@ namespace ATIK
             {
                 if (trim == true)
                 {
-                    rtn = XmlPrm.InnerXml;
+                    lock (objLock_Access)
+                    {
+                        rtn = XmlPrm.InnerXml;
+                    }
                 }
                 else
                 {

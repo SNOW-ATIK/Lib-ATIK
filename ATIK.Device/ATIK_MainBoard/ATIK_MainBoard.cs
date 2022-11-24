@@ -11,7 +11,7 @@ namespace ATIK.Device.ATIK_MainBoard
     {
         private static Dictionary<DefinedMainBoards, IMB_Driver> MainBoardDrivers = new Dictionary<DefinedMainBoards, IMB_Driver>();
 
-        public static bool Initialize(string cfgFileName)
+        public static bool Initialize(string cfgFileName, bool interlockEnabled = true)
         {
             // Parse MainBoard Config File
             XmlCfgPrm cfg = new XmlCfgPrm(cfgFileName, "ATIK_MainBoard");
@@ -35,7 +35,7 @@ namespace ATIK.Device.ATIK_MainBoard
                             break;
 
                         case DefinedMainBoards.L_Titrator:
-                            DrvMB_L_Titrator drv_LT = new DrvMB_L_Titrator(comElemName);
+                            DrvMB_L_Titrator drv_LT = new DrvMB_L_Titrator(comElemName, interlockEnabled);
                             MainBoardDrivers.Add(board, drv_LT);
                             break;
                     }

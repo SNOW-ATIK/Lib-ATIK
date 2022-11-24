@@ -9,10 +9,23 @@ using System.Windows.Forms;
 
 namespace ATIK
 {
-    public partial class MsgFrm_AskYesNo : Form
+    public partial class MsgFrm_AskYesNo : Form, IMsgFrm
     {
         //private SDDio.DioTCB mBuzzer;
         private bool bBuzzerOn = false;
+
+        private object objLock_IsShow = new object();
+        private bool _IsShown = false;
+        public bool IsShown
+        {
+            get
+            {
+                lock (objLock_IsShow)
+                {
+                    return _IsShown;
+                }
+            }
+        }
 
         public MsgFrm_AskYesNo(string msg, bool bEnbBuzzer = true)
         {
@@ -107,6 +120,22 @@ namespace ATIK
             if (bBuzzerOn == true)
             {
                 //DRV_TowerLamp.BUZZER_WARN_OFF();
+            }
+        }
+
+        private void MsgFrm_AskYesNo_Shown(object sender, EventArgs e)
+        {
+            lock (objLock_IsShow)
+            {
+                _IsShown = true;
+            }
+        }
+
+        private void MsgFrm_AskYesNo_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            lock (objLock_IsShow)
+            {
+                _IsShown = false;
             }
         }
     }

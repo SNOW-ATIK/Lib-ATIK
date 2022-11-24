@@ -385,7 +385,7 @@ namespace ATIK
                     }
                     else if (cntLeft < 0)
                     {
-                        tail = Texts.GetText(CurrentLanguage, "Tail_CountOver");
+                        tail = Texts.GetText(CurrentLanguage, "Tail_CountLeft");
                     }
                     break;
             }
@@ -478,21 +478,61 @@ namespace ATIK
             SetRate(MyInfo);
         }
 
-        public void CheckAuthority(UserAuthority authority)
+        public void EnableEdit(bool enb)
         {
             bool subjEnabled = (bool)CmpCol_Enabled.Prm_Value;
+            if (enb == true)
+            {
+                CmpCol_Type.EnableModifying(subjEnabled, true);
+                CmpVal_Since.EnableModifying(subjEnabled, true);
+                CmpVal_Current.EnableModifying(subjEnabled, false);
+                CmpVal_Last.EnableModifying(subjEnabled, true);
+                chk_Select.Visible = true;
+                CmpCol_Enabled.Visible = true;
+                CmpCol_Type.Visible = true;
+                btn_Set.Visible = true;
+                tableLayoutPanel1.ColumnStyles[0].Width = 0;
+                tableLayoutPanel1.ColumnStyles[2].Width = 80;
+                tableLayoutPanel1.ColumnStyles[3].Width = 85;
+                tableLayoutPanel1.ColumnStyles[9].Width = 54;
+            }
+            else
+            {
+                CmpCol_Type.EnableModifying(subjEnabled, false);
+                CmpVal_Since.EnableModifying(subjEnabled, false);
+                CmpVal_Current.EnableModifying(subjEnabled, false);
+                CmpVal_Last.EnableModifying(subjEnabled, false);
+                chk_Select.Visible = false;
+                CmpCol_Enabled.Visible = false;
+                CmpCol_Type.Visible = false;
+                btn_Set.Visible = false;
+                tableLayoutPanel1.ColumnStyles[0].Width = 0;
+                tableLayoutPanel1.ColumnStyles[2].Width = 0;
+                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                tableLayoutPanel1.ColumnStyles[9].Width = 0;
+            }
+        }
+
+        public void CheckAuthority(UserAuthority authority, bool modifyEnb)
+        {
+            bool subjEnb = (bool)CmpCol_Enabled.Prm_Value;
             switch (authority)
             {
                 case UserAuthority.Admin:
-                    CmpCol_Type.EnableModifying(subjEnabled, true);
-                    CmpVal_Since.EnableModifying(subjEnabled, true);
-                    CmpVal_Current.EnableModifying(subjEnabled, false);
-                    CmpVal_Last.EnableModifying(subjEnabled, true);
+                    CmpCol_Type.EnableModifying(subjEnb, modifyEnb);
+                    CmpVal_Since.EnableModifying(subjEnb, modifyEnb);
+                    CmpVal_Current.EnableModifying(subjEnb, false);
+                    CmpVal_Last.EnableModifying(subjEnb, modifyEnb);
                     chk_Select.Visible = true;
+                    chk_Select.Enabled = modifyEnb;
                     CmpCol_Enabled.Visible = true;
+                    CmpCol_Enabled.EnableModifying(subjEnb, modifyEnb);
                     CmpCol_Type.Visible = true;
+                    CmpCol_Type.EnableModifying(subjEnb, modifyEnb);
                     btn_Set.Visible = true;
-                    tableLayoutPanel1.ColumnStyles[0].Width = 54;
+                    btn_Set.Enabled = modifyEnb;
+                    tableLayoutPanel1.ColumnStyles[0].Width = 0;
+                    //tableLayoutPanel1.ColumnStyles[0].Width = 54;
                     tableLayoutPanel1.ColumnStyles[2].Width = 80;
                     tableLayoutPanel1.ColumnStyles[3].Width = 85;
                     tableLayoutPanel1.ColumnStyles[9].Width = 54;
@@ -500,10 +540,10 @@ namespace ATIK
 
                 case UserAuthority.Engineer:
                 case UserAuthority.User:
-                    CmpCol_Type.EnableModifying(subjEnabled, false);
-                    CmpVal_Since.EnableModifying(subjEnabled, false);
-                    CmpVal_Current.EnableModifying(subjEnabled, false);
-                    CmpVal_Last.EnableModifying(subjEnabled, false);
+                    CmpCol_Type.EnableModifying(subjEnb, false);
+                    CmpVal_Since.EnableModifying(subjEnb, false);
+                    CmpVal_Current.EnableModifying(subjEnb, false);
+                    CmpVal_Last.EnableModifying(subjEnb, false);
                     chk_Select.Visible = false;
                     CmpCol_Enabled.Visible = false;
                     CmpCol_Type.Visible = false;
@@ -525,10 +565,10 @@ namespace ATIK
         {
             bool bChanged = (bool)changedValue;
 
-            CmpCol_Type.EnableParameter(bChanged);
-            CmpVal_Since.EnableParameter(bChanged);
-            CmpVal_Current.EnableParameter(bChanged);
-            CmpVal_Last.EnableParameter(bChanged);
+            CmpCol_Type.EnableModifying(true, bChanged);
+            CmpVal_Since.EnableModifying(true, bChanged);
+            CmpVal_Current.EnableModifying(true, bChanged);
+            CmpVal_Last.EnableModifying(true, bChanged);
             lbl_Status.BackColor = bChanged == true ? Color.LemonChiffon : Color.LightGray;
             lbl_Remain.Visible = bChanged;
             //btn_Set.Enabled = bChanged;
@@ -660,6 +700,7 @@ namespace ATIK
         {
             public static string GetText(Language language, string itemName)
             {
+                // TBD
                 string rtn = "NotDefined";
                 switch (language)
                 {

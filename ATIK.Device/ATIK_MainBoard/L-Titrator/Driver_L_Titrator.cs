@@ -34,20 +34,30 @@ namespace ATIK.Device.ATIK_MainBoard
 
         private MB_Map Map;
         private MB_DataHandler DataHandler;
+        private Dictionary<LineOrder, LockedBool> SyringeSendingState = new Dictionary<LineOrder, LockedBool>();
 
-        public DrvMB_L_Titrator(string comElemName)
+        public DrvMB_L_Titrator(string comElemName, bool interlockEnabled = true)
         {
             // Load Map
             Map = new MB_Map();
 
             // Init Com.
-            DataHandler = new MB_DataHandler(DefinedMainBoards.L_Titrator.ToString(), comElemName);
+            DataHandler = new MB_DataHandler(DefinedMainBoards.L_Titrator.ToString(), comElemName, interlockEnabled);
+
+            SyringeSendingState.Clear();
+            SyringeSendingState.Add(LineOrder.Syringe_1, new LockedBool());
+            SyringeSendingState.Add(LineOrder.Syringe_2, new LockedBool());
         }
 
         // Protocol
         public MB_Protocol Get_Protocol()
         {
             return DataHandler.Get_Protocol();
+        }
+
+        public void Enable_Interlock(bool enable)
+        {
+            DataHandler.Enable_Interlock(enable);
         }
 
         // Tx, Rx Frame
@@ -83,9 +93,9 @@ namespace ATIK.Device.ATIK_MainBoard
         }
 
         // Drive
-        public void Set_BitState(int lineOrder, int bitOrder, bool state)
+        public void Set_BitState(int lineNo, int bitOrder, bool state)
         {
-            DataHandler.Set_Bit((LineOrder)lineOrder, bitOrder, state);
+            DataHandler.Set_Bit((LineOrder)lineNo, bitOrder, state);
         }
 
         public bool Get_BitState(int lineOrder, int bitOrder)
@@ -112,14 +122,15 @@ namespace ATIK.Device.ATIK_MainBoard
             return 0;
         }
 
-        public bool Run_Syringe(int lineOrder, MB_SyringeFlow flow, MB_SyringeDirection dir, int vol_Digit, int speed)
+        public bool Run_Syringe(int lineNo, MB_SyringeFlow flow, MB_SyringeDirection dir, int vol_Digit, int speed)
         {
-            if ((LineOrder)lineOrder != LineOrder.Syringe_1 && (LineOrder)lineOrder != LineOrder.Syringe_2)
+            LineOrder lineOrder = (LineOrder)lineNo;
+            if (lineOrder != LineOrder.Syringe_1 && lineOrder != LineOrder.Syringe_2)
             {
                 return false;
             }
 
-            string sChNo = (LineOrder)lineOrder == LineOrder.Syringe_1 ? "0" : "1";
+            string sChNo = lineOrder == LineOrder.Syringe_1 ? "0" : "1";
             string sFlow = flow == MB_SyringeFlow.Pick ? "0" : "1";
             string sDir = string.Empty;
             switch (dir)
@@ -140,28 +151,39 @@ namespace ATIK.Device.ATIK_MainBoard
             string sVolume = vol_Digit.ToString("00000");
 
             string txLine = $"{sChNo}{sFlow}{sDir}{sSpeed}{sVolume}";
-            bool setDone = DataHandler.Set_Line((LineOrder)lineOrder, txLine, true);
+
+            // Fluidics 표시할때, 보낸 패킷을 바로 리턴하기 때문에 표시 오류가 생긴다.
+            // 보낸 패킷에 대한 리턴을 무시하기 위해, 보내는 중을 알리기 위한 Flag를 설정한다.
+            SyringeSendingState[lineOrder].Value = true;
+            bool setDone = DataHandler.Set_Line((LineOrder)lineNo, txLine, true);
             bool resetDone = false;
             if (setDone == true)
             {
                 txLine = "0000000000";
-                resetDone = DataHandler.Set_Line((LineOrder)lineOrder, txLine, true);
+                resetDone = DataHandler.Set_Line((LineOrder)lineNo, txLine, true);
             }
+            SyringeSendingState[lineOrder].Value = false;
 
             bool bSetSuccess = setDone & resetDone;
 
             return bSetSuccess;
         }
 
-        public (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(int lineOrder)
+        public (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(int lineNo)
         {
-            LineOrder line = (LineOrder)lineOrder;
-            if (line != LineOrder.Syringe_1 && line != LineOrder.Syringe_2)
+            LineOrder lineOrder = (LineOrder)lineNo;
+
+            if (lineOrder != LineOrder.Syringe_1 && lineOrder != LineOrder.Syringe_2)
             {
                 return (false, 0);
             }
 
-            string sLine = DataHandler.Get_Line((LineOrder)lineOrder);
+            if (SyringeSendingState[lineOrder].Value == true)
+            {
+                return (false, 0);
+            }
+
+            string sLine = DataHandler.Get_Line(lineOrder);
             if (sLine.Length < 10)
             {
                 return (false, 0);
@@ -204,6 +226,29 @@ namespace ATIK.Device.ATIK_MainBoard
                 return (true, (MB_SyringeDirection)dir);
             }
             return (false, 0);
+        }
+    }
+
+    public class LockedBool
+    {
+        private object LockObject = new object();
+        private bool _LockedValue = false;
+        public bool Value
+        {
+            get
+            {
+                lock (LockObject)
+                {
+                    return _LockedValue;
+                }
+            }
+            set
+            {
+                lock (LockObject)
+                {
+                    _LockedValue = value;
+                }
+            }
         }
     }
 }
