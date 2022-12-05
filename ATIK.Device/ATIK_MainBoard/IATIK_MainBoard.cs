@@ -45,9 +45,11 @@ namespace ATIK.Device.ATIK_MainBoard
         void Set_AnalogValueRaw(int lineNo, int analogValRaw);
         int Get_AnalogValueRaw(int lineNo);
 
-        bool Run_Syringe(int lineOrder, MB_SyringeFlow flow, MB_SyringeDirection dir, int vol_Digit, int speed);
-        (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(int lineOrder);
-        (bool IsValid, MB_SyringeDirection PortDirection) Get_SyringePortDirection(int lineOrder);
+        bool Init_Syringe(int lineNo);
+        bool Run_Syringe(int lineNo, MB_SyringeFlow flow, MB_SyringeDirection dir, int vol_Digit, int speed);
+        (bool IsValid, MB_SyringeStatus Status) Get_SyringeStatus(int lineNo);
+        (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(int lineNo);
+        (bool IsValid, MB_SyringeDirection PortDirection) Get_SyringePortDirection(int lineNo);
     }
 
     // Enums
@@ -71,20 +73,55 @@ namespace ATIK.Device.ATIK_MainBoard
         Output,
     }
 
+    public enum MB_SyringePacketStruct
+    { 
+        Channel = 0,
+        Error = 1,
+        Read_Write = 2,
+        Command_Status = 3,
+        Pick_Dispense = 4,
+        In_Out_Ext = 5,
+        Speed = 6,
+        Distance_Position = 8,
+        Length = 13
+    }
+
+    public enum MB_SyringeRW
+    { 
+        Read,
+        Write,
+    }
+
+    public enum MB_SyringeCommand
+    { 
+        None,
+        Initialize,
+        Move,
+        Stop,
+    }
+
+    public enum MB_SyringeStatus
+    { 
+        None,
+        Initializing,
+        Moving,
+        Stopping,
+        Error
+    }
+
     public enum MB_SyringeFlow
     {
+        None,
         Pick,
         Dispense,
-        None
     }
 
     public enum MB_SyringeDirection
     {
-        Reserved,
+        None,
         In,
         Out,
         Ext,
-        None,
     }
 
     // class

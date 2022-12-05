@@ -211,10 +211,16 @@ namespace ATIK.Device.ATIK_MainBoard
                 return ComHandler.Get_RxFrame();
             }
 
-            public bool Set_Line(LineOrder lineOrder, string txLine, bool sync = false)
+            public bool Set_Line(LineOrder lineOrder, string txLine, bool checkSameAsTx = false)
             {
+                if (lineOrder == LineOrder.Syringe_1 || lineOrder == LineOrder.Syringe_2)
+                {
+                    throw new InvalidOperationException("Function is not valid for controlling Syringes");
+                }
+
                 ComHandler.Set_TxLine((int)lineOrder, txLine);
-                if (sync == true)
+
+                if (checkSameAsTx == true)
                 {
                     bool sameAsTx = false;
                     Stopwatch st = new Stopwatch();
@@ -232,6 +238,32 @@ namespace ATIK.Device.ATIK_MainBoard
                     return sameAsTx;
                 }
                 return true;
+            }
+
+            public bool Write_Syringe(LineOrder lineOrder, string txLine)
+            {
+                if (lineOrder != LineOrder.Syringe_1 && lineOrder != LineOrder.Syringe_2)
+                {
+                    throw new InvalidOperationException("Function is only valid for controlling Syringes");
+                }
+
+                ComHandler.Set_TxLine((int)lineOrder, txLine);
+
+                bool readWriteAck = false;
+                Stopwatch st = new Stopwatch();
+                st.Start();
+                while (st.ElapsedMilliseconds < 1000)
+                {
+                    string rxLine = ComHandler.Get_RxLine((int)lineOrder);
+                    if (rxLine.Substring((int)MB_SyringePacketStruct.Read_Write, 1) == ((int)MB_SyringeRW.Write).ToString())
+                    {
+                        readWriteAck = true;
+                        break;
+                    }
+                    Thread.Sleep(100);
+                }
+                st.Stop();
+                return readWriteAck;
             }
 
             public string Get_Line(LineOrder lineOrder)

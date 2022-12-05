@@ -66,39 +66,49 @@ namespace ATIK.Device.ATIK_MainBoard
         }
 
         // Drive
-        public static void Set_BitState(DefinedMainBoards boardID, int lineOrder, int bitOrder, bool state)
+        public static void Set_BitState(DefinedMainBoards boardID, int lineNo, int bitOrder, bool state)
         {
-            Get_Driver(boardID).Set_BitState(lineOrder, bitOrder, state);
+            Get_Driver(boardID).Set_BitState(lineNo, bitOrder, state);
         }
 
-        public static bool Get_BitState(DefinedMainBoards boardID, int lineOrder, int bitOrder)
+        public static bool Get_BitState(DefinedMainBoards boardID, int lineNo, int bitOrder)
         {
-            return Get_Driver(boardID).Get_BitState(lineOrder, bitOrder);
+            return Get_Driver(boardID).Get_BitState(lineNo, bitOrder);
         }
 
-        public static void Set_AnalogValueRaw(DefinedMainBoards boardID, int lineOrder, int analogValRaw)
+        public static void Set_AnalogValueRaw(DefinedMainBoards boardID, int lineNo, int analogValRaw)
         {
-            Get_Driver(boardID).Set_AnalogValueRaw(lineOrder, analogValRaw);
+            Get_Driver(boardID).Set_AnalogValueRaw(lineNo, analogValRaw);
         }
 
-        public static int Get_AnalogValueRaw(DefinedMainBoards boardID, int lineOrder)
+        public static int Get_AnalogValueRaw(DefinedMainBoards boardID, int lineNo)
         {
-            return Get_Driver(boardID).Get_AnalogValueRaw(lineOrder);
+            return Get_Driver(boardID).Get_AnalogValueRaw(lineNo);
         }
 
-        public static bool Run_Syringe(DefinedMainBoards boardID, int lineOrder, MB_SyringeFlow flow, MB_SyringeDirection dir, int vol_Digit, int speed)
+        public static bool Init_Syringe(DefinedMainBoards boardID, int lineNo)
         {
-            return Get_Driver(boardID).Run_Syringe(lineOrder, flow, dir, vol_Digit, speed);
+            return Get_Driver(boardID).Init_Syringe(lineNo);
         }
 
-        public static (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(DefinedMainBoards boardID, int lineOrder)
+        public static bool Run_Syringe(DefinedMainBoards boardID, int lineNo, MB_SyringeFlow flow, MB_SyringeDirection dir, int vol_Digit, int speed)
         {
-            return Get_Driver(boardID).Get_SyringeCurrentPosition(lineOrder);
+            return Get_Driver(boardID).Run_Syringe(lineNo, flow, dir, vol_Digit, speed);
         }
 
-        public static (bool IsValid, MB_SyringeDirection PortDirection) Get_SyringePortDirection(DefinedMainBoards boardID, int lineOrder)
+        public static (bool IsValids, MB_SyringeStatus Status) Get_SyringeStatus(DefinedMainBoards boardID, int lineNo)
         {
-            return Get_Driver(boardID).Get_SyringePortDirection(lineOrder);
+            return Get_Driver(boardID).Get_SyringeStatus(lineNo);
+        }
+
+        public static (bool IsValid, int Volume_Digit) Get_SyringeCurrentPosition(DefinedMainBoards boardID, int lineNo)
+        {
+            return Get_Driver(boardID).Get_SyringeCurrentPosition(lineNo);
+        }
+
+        public static (bool IsValid, MB_SyringeDirection PortDirection) Get_SyringePortDirection(DefinedMainBoards boardID, int lineNo)
+        {
+            return Get_Driver(boardID).Get_SyringePortDirection(lineNo);
         }
     }
 }
